@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     JWT_ALGORITHM:str
     REDIS_HOST:str
     REDIS_DOOR:int
+    ADM_PASSWORD:str
     model_config=SettingsConfigDict(
         env_file=".env",
         extra="ignore"
@@ -16,3 +17,4 @@ jwt_key = env.JWT_KEY
 jwt_algorithm = env.JWT_ALGORITHM
 redis_host = env.REDIS_HOST
 redis_door = env.REDIS_DOOR
+password = env.ADM_PASSWORD
