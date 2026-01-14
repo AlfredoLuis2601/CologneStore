@@ -12,6 +12,7 @@ from .dependencies import verify_refresh_token,get_user_info
 from .utils import decode_JWT,generate_JWT
 from fastapi.security import OAuth2PasswordRequestForm
 from .dependencies import RoleChecker
+from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
 customer_routes = APIRouter()
 crud = CologneCRUD()
 user_role_checker = RoleChecker(["User","admin"])
@@ -22,7 +23,7 @@ async def get_users(session:AsyncSession = Depends(get_session),role:str = Depen
     if users:
         return users
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No customer was found.")
+        raise UserNotFound()
 
 @customer_routes.post("/sign_up",response_model=CustomersDB,status_code=status.HTTP_201_CREATED)
 async def sign_up_users(user_data:UserClient,session:AsyncSession = Depends(get_session),role:str = Depends(user_role_checker.check_role)):
@@ -30,7 +31,7 @@ async def sign_up_users(user_data:UserClient,session:AsyncSession = Depends(get_
     if user is not None:
         return user
     else:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="Your account information is already been used.")
+        raise UserAlreadyExist()
 
 @customer_routes.post("/signIn",response_model=dict,status_code=status.HTTP_200_OK)
 async def sign_in_users(user_data:OAuth2PasswordRequestForm = Depends(),session:AsyncSession = Depends(get_session)):
@@ -38,8 +39,7 @@ async def sign_in_users(user_data:OAuth2PasswordRequestForm = Depends(),session:
     if approved:
         return approved
     else:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="Wrong password.Try again.")
-    
+        raise WrongPassword()
 @customer_routes.post("/refresh_token",response_model=dict,status_code=status.HTTP_201_CREATED)
 async def new_access_token(token_data:dict = Depends(verify_refresh_token),check_role:str = Depends(admin_role_checker.check_role)):
     username = token_data.get("username")

@@ -8,6 +8,7 @@ from .db_crud import CologneCRUD
 from sqlmodel.ext.asyncio.session import AsyncSession
 from .database import get_session
 from .dependencies import get_user_info,RoleChecker
+from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
 cologne_routes = APIRouter()
 crud = CologneCRUD()
 admin_role_checker = RoleChecker(["admin"])
@@ -21,7 +22,7 @@ role:str = Depends(admin_role_checker.check_role)):
     if colognes is not None:
         return colognes
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Could not return any cologne, the inventory is empty.")
+        raise CologneNotFound()
     
 @cologne_routes.post("/",response_model=CologneClient,status_code=status.HTTP_201_CREATED)
 async def create_cologne(raw_cologne_data:CologneClient,session:AsyncSession = Depends(get_session),user_info = Depends(get_user_info),
@@ -38,7 +39,7 @@ role:str = Depends(admin_role_checker.check_role)):
     if cologne is not None:
         return cologne
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Cologne not found.")
+        raise CologneNotFound()
     
 @cologne_routes.patch("/{cologne_name}",response_model=CologneClient,status_code=status.HTTP_200_OK)
 async def update_cologne(cologne_name:str,raw_update_data:UpdateCologne,session:AsyncSession = Depends(get_session),user_info = Depends(get_user_info),
@@ -48,7 +49,7 @@ role:str = Depends(admin_role_checker.check_role)):
     if updated_cologne is not None:
         return updated_cologne
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Cologne not found in the inventory.")
+        raise CologneNotFound()
     
 @cologne_routes.delete("/{cologne_name}",response_model=dict,status_code=status.HTTP_200_OK)
 async def remove_cologne(cologne_name:str,session:AsyncSession = Depends(get_session),user_info = Depends(get_user_info),
@@ -58,7 +59,7 @@ role:str = Depends(admin_role_checker.check_role)):
     if delete_message is not None:
         return delete_message
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Cologne could not be deleted,because it was not found.")
+        raise DeleteCologne()
 
 @cologne_routes.post("/sales",response_model=Dict,status_code=status.HTTP_201_CREATED)
 async def sale_process(sale_data:SaleClient,session:AsyncSession = Depends(get_session),user_info = Depends(get_user_info),
