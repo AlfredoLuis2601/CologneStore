@@ -39,8 +39,8 @@ class RoleChecker():
         return True
     else:
         raise RolePermission(
-            role=user_data.get("role"),
-            user_info=user_data
+            required_role=self.roles,
+            user_role=user_data.get("role")
         )
         
 

@@ -12,6 +12,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from .dependencies import get_user_info
 from .dependencies import token_bearer
 from .redis_config import token_black_list
+from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
 STANDARD_EXPIRATION_TIME = 2
 #CRUD requests:
 #Funcao update_cologne_sale: Chama a funcao get_cologne para retornar a qtd em estoque e diminuir pela quantidade comprada
@@ -108,7 +109,8 @@ class CologneCRUD():
                refresh_token = generate_JWT(
                    user_data={
                        "username":user.email,
-                       "user_id":user.customer_id
+                       "user_id":user.customer_id,
+                       "role":user.role
                    },expiration_time= timedelta(days=STANDARD_EXPIRATION_TIME),is_refresh=True
                )
                return {
@@ -120,7 +122,7 @@ class CologneCRUD():
            else:
                return False
        else:
-           raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Email not found.")
+           raise UserNotFound()
     
    async def update_customer(self,raw_user_data:UserClient,raw_update_data:UserUpdate,session:AsyncSession):
         user_to_be_updated:User = await self.signIn(raw_user_data,session)
@@ -136,9 +138,9 @@ class CologneCRUD():
                 await session.refresh(user_to_be_updated)
                 return user_to_be_updated
             else:
-                raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,detail="User information is already been used.")
+                raise UserAlreadyExist()
         else:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Customer was not found.")
+            raise UserNotFound()
                 
    async def delete_user(self,email:str,password:str,session:AsyncSession):
        deleted_user = await self.user_exists(email,password,session)
@@ -180,9 +182,9 @@ class CologneCRUD():
               await self.update_inventory(raw_sale_data.amountBought,existent_cologne,session)
               return True
           else:
-              raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User was not found.")
+              raise UserNotFound()
        else:
-           raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Cologne was not found in the inventory.")
+           raise CologneNotFound()
            
    async def add_access_token_blacklist(self,payload:dict):
        jti = payload.get("jti")
@@ -193,6 +195,7 @@ class CologneCRUD():
        return {
            "data":"Logout has been succesfully done."
        }
+
        
         
 
