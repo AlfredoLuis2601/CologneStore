@@ -4,6 +4,10 @@ from sqlalchemy.exc import OperationalError
 from cologne.config_env import url_database
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import sessionmaker
+from cologne.utils import get_hash
+from cologne.config_env import password
+import asyncio
+from cologne.models import CustomersDB
 async_engine = AsyncEngine(
     create_engine(
         url=url_database,
@@ -31,5 +35,6 @@ async def get_session():
     )
     async with Session() as session: #Generator
         yield session #return de generators
+
 
        

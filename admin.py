@@ -5,9 +5,10 @@ from cologne.models import CustomersDB
 from cologne.utils import get_hash
 from sqlalchemy.orm import sessionmaker
 from contextlib import asynccontextmanager
-from config_env import password
+from cologne.config_env import password
 import asyncio
 async def create_Luis():
+    print("oi")
     hash_password = get_hash(password)
     admin_information = {
         "email":"luisalfredoalvesdeandrade1010@gmail.com",

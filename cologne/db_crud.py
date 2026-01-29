@@ -87,7 +87,9 @@ class CologneCRUD():
        user = await self.user_exists(raw_user_data.email,session)
        if user is None:
            raw_user_data.hash_password = get_hash(raw_user_data.hash_password)
-           new_user = CustomersDB.model_validate(raw_user_data)
+           user_data = raw_user_data.model_dump()
+           user_data["role"] = "User"
+           new_user = CustomersDB.model_validate(user_data)
            session.add(new_user)
            await session.commit()
            await session.refresh(new_user)
@@ -192,10 +194,12 @@ class CologneCRUD():
        time_now = datetime.now(timezone.utc).timestamp()  
        remaining_time = int(exp - time_now)
        await token_black_list.set(name=jti,ex=remaining_time,value="")  
-       return {
-           "data":"Logout has been succesfully done."
-       }
-
+       return JSONResponse(
+           status_code=201,
+           content={
+               "message":"Logout has been successfully done!"
+           }
+       )
        
         
 

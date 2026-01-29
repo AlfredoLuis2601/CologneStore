@@ -25,7 +25,8 @@ class User(UserClient):
     sign_up_date:datetime
     last_update_at:datetime
     is_verified:bool = False
-    role:str
+    role:Optional[str]
+    token:uuid.UUID
 class UserUpdate(BaseModel):
     email:str
     hash_password:str

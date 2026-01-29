@@ -1,4 +1,5 @@
 from fastapi.routing import APIRouter
+from fastapi.responses import JSONResponse
 from typing import List,Dict
 from fastapi.exceptions import HTTPException
 from fastapi import status
@@ -12,6 +13,8 @@ from .dependencies import verify_refresh_token,get_user_info
 from .utils import decode_JWT,generate_JWT
 from fastapi.security import OAuth2PasswordRequestForm
 from .dependencies import RoleChecker
+from cologne.mail import welcome_email
+from sqlmodel import select
 from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
 customer_routes = APIRouter()
 crud = CologneCRUD()
@@ -29,7 +32,13 @@ async def get_users(session:AsyncSession = Depends(get_session),role:str = Depen
 async def sign_up_users(user_data:UserClient,session:AsyncSession = Depends(get_session),role:str = Depends(user_role_checker.check_role)):
     user= await crud.signUp(user_data,session)
     if user is not None:
-        return user
+        message = await welcome_email(email=[user.email],user=user,session=session)
+        return JSONResponse(
+            content={
+                "message":"User created successfully.",
+                "user_data":dict(user_data),
+            }
+        )
     else:
         raise UserAlreadyExist()
 
@@ -57,3 +66,19 @@ async def logout(payload:dict = Depends(get_user_info),role:str = Depends(user_r
 @customer_routes.get("/current_user",response_model=dict,status_code=status.HTTP_200_OK)
 async def get_current_user(payload:dict = Depends(get_user_info),role:str = Depends(admin_role_checker.check_role)):
     return payload 
+
+@customer_routes.post("/delete_user",status_code=status.HTTP_201_CREATED)
+async def delete_user(email:str,session:AsyncSession = Depends(get_session),role:str = Depends(admin_role_checker.check_role)):
+    command = select(CustomersDB).where(email==CustomersDB.email)
+    result = await session.exec(command)
+    user = result.first()
+    if user is not None and user.role=="User":
+        await session.delete(user)
+        await session.commit()
+        return JSONResponse(
+            content={
+                "message":"User deleted successfully."
+            }
+        )
+    else:
+       raise UserNotFound()

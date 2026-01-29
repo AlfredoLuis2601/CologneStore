@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from cologne.schemas import CologneClient,Cologne,UpdateCologne,UserClient,UserUpdate,SaleClient
 from fastapi import status
+from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
 from typing import Optional,List,Dict
 from fastapi import Depends
@@ -66,4 +67,9 @@ async def sale_process(sale_data:SaleClient,session:AsyncSession = Depends(get_s
 role:str = Depends(user_role_checker.check_role)):
     
     approved = await crud.purchase_process(sale_data,session)
-    return {"data":"Sale has been approved."}
+    return JSONResponse(
+        status_code=200,
+        content={
+            "message":"Sale has been succesfully done!"
+        }      
+    )

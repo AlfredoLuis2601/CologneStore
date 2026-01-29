@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from cologne.routes import cologne_routes
+from cologne.mail_routes import mail_router
 from contextlib import asynccontextmanager
 from cologne.database import start_db
 from .user_routes import customer_routes
@@ -21,7 +22,7 @@ my_app = FastAPI(
 )
 my_app.include_router(cologne_routes,prefix=f"/api/{api_version}/cologne_store")
 my_app.include_router(customer_routes,prefix=f"/api/{api_version}/cologne_store/users")
-
+my_app.include_router(mail_router)
 #Adding custom exception handler to the application 
 
 add_all_exceptions(my_app)
