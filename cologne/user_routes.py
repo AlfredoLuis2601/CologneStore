@@ -5,6 +5,7 @@ from fastapi.exceptions import HTTPException
 from fastapi import status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from fastapi import Depends
+from .config_env import base_url
 from .database import get_session
 from .models import CustomersDB
 from .schemas import UserClient,SaleClient,User,ResponseToken,UserBearer
@@ -13,7 +14,8 @@ from .dependencies import verify_refresh_token,get_user_info
 from .utils import decode_JWT,generate_JWT
 from fastapi.security import OAuth2PasswordRequestForm
 from .dependencies import RoleChecker
-from cologne.mail import welcome_email
+from .background_tasks import email_task_queue
+import uuid
 from sqlmodel import select
 from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
 customer_routes = APIRouter()
@@ -32,12 +34,16 @@ async def get_users(session:AsyncSession = Depends(get_session),role:str = Depen
 async def sign_up_users(user_data:UserClient,session:AsyncSession = Depends(get_session),role:str = Depends(user_role_checker.check_role)):
     user= await crud.signUp(user_data,session)
     if user is not None:
-        message = await welcome_email(email=[user.email],user=user,session=session)
+        key = uuid.uuid4()
+        link = f"{base_url}/validate_email/{key}"
+        html = f"""<h1>Welcome to the Cologne Store!</h1>
+        <p>Click on the link to verify your account <a href ="{link}"></a></p>"""
+        email_task_queue.delay("Validate your email",[user.email],html)
         return JSONResponse(
             content={
-                "message":"User created successfully.",
-                "user_data":dict(user_data),
-            }
+                "message":"Account created succesfully."
+            },
+            status_code=201
         )
     else:
         raise UserAlreadyExist()

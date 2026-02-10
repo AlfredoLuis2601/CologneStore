@@ -4,8 +4,7 @@ class Settings(BaseSettings):
     DATABASE_URL:str
     JWT_KEY:str
     JWT_ALGORITHM:str
-    REDIS_HOST:str
-    REDIS_DOOR:int
+    REDIS_URL:str 
     ADM_PASSWORD:str
     MAIL_USERNAME:str
     MAIL_PASSWORD:str
@@ -13,6 +12,7 @@ class Settings(BaseSettings):
     MAIL_SERVER:str
     MAIL_FROM:str
     MAIL_FROM_NAME:str
+    BASE_URL:str
     model_config=SettingsConfigDict(
         env_file=".env",
         extra="ignore"
@@ -21,8 +21,7 @@ env = Settings()
 url_database = env.DATABASE_URL
 jwt_key = env.JWT_KEY
 jwt_algorithm = env.JWT_ALGORITHM
-redis_host = env.REDIS_HOST
-redis_door = env.REDIS_DOOR
+redis_url = env.REDIS_URL
 password = env.ADM_PASSWORD
 mail_username = env.MAIL_USERNAME
 mail_password = env.MAIL_PASSWORD
@@ -30,3 +29,5 @@ mail_port = env.MAIL_PORT
 mail_server = env.MAIL_SERVER
 mail_from = env.MAIL_FROM
 mail_from_name = env.MAIL_FROM_NAME
+base_url = env.BASE_URL
+#Posteriormente sera a url do render e depois do site.

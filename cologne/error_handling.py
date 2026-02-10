@@ -85,7 +85,13 @@ class DeleteCologne(ErrorHandling):
     Cologne could not be deleted because it was not found.
     """
     pass
-
+class EmailNotVerified(ErrorHandling):
+    """Email has not been verified yet."""
+    pass
+class EmailTokenExpired(ErrorHandling):
+    """Email token expired."""
+class DifferentPassword(ErrorHandling):
+    """The confirmed password was different than the previous one."""
 def create_exception_handler(status_code:int,detail:Any)->Callable[[Request,Exception],JSONResponse]:
     #Request seria todo o request body retornado e a exception seria a minha custom exception lançada
     async def exception_handler(request:Request,exc:Exception)->JSONResponse:
@@ -197,3 +203,24 @@ def add_all_exceptions(my_app:FastAPI):
         "error_code":"RolePermission"
     }
 ))
+  my_app.add_exception_handler(EmailNotVerified,create_exception_handler(
+      status_code=401,detail={
+          "error_message":"Email has not been verified yet.",
+          "solution":"Please go to email,check the email sent and verify your account.",
+          "error_code":"EmailNotVerified"
+      }
+  ))
+  my_app.add_exception_handler(EmailTokenExpired,create_exception_handler(
+      status_code=401,detail={
+          "error_message":"Email token expired.",
+          "solution":"Please verify your email accessing the new email sent",
+          "error_code":"EmailTokenExpired"
+      }
+  ))
+  my_app.add_exception_handler(DifferentPassword,create_exception_handler(
+      status_code=404,detail={
+          "error_message":" User sent different passwords",
+          "solution":"Type the password again.",
+          "error_code":"DifferentPasswords"
+      }
+  ))

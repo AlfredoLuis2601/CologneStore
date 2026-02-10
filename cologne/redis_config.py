@@ -1,11 +1,7 @@
 from redis import asyncio
-from .config_env import redis_host,redis_door   
+from .config_env import redis_url
 
-token_black_list = asyncio.Redis(
-   host=redis_host,
-   port=redis_door,
-   db=0
-)
+token_block_list = asyncio.from_url(redis_url)
 
 
 

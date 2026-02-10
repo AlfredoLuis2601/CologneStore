@@ -11,9 +11,11 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from .dependencies import get_user_info
 from .dependencies import token_bearer
-from .redis_config import token_black_list
+import uuid
+from .redis_config import token_block_list
 from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
-STANDARD_EXPIRATION_TIME = 2
+STANDARD_EXPIRATION_JWT_TIME = 2
+STANDARD_TOKEN_EXPIRATION_TIME = 30
 #CRUD requests:
 #Funcao update_cologne_sale: Chama a funcao get_cologne para retornar a qtd em estoque e diminuir pela quantidade comprada
 #passada como parametro.
@@ -89,6 +91,7 @@ class CologneCRUD():
            raw_user_data.hash_password = get_hash(raw_user_data.hash_password)
            user_data = raw_user_data.model_dump()
            user_data["role"] = "User"
+           user_data["expiry_token_time"] = timedelta(minutes=STANDARD_TOKEN_EXPIRATION_TIME) + datetime.now(timezone.utc).replace(tzinfo=None)
            new_user = CustomersDB.model_validate(user_data)
            session.add(new_user)
            await session.commit()
@@ -113,7 +116,7 @@ class CologneCRUD():
                        "username":user.email,
                        "user_id":user.customer_id,
                        "role":user.role
-                   },expiration_time= timedelta(days=STANDARD_EXPIRATION_TIME),is_refresh=True
+                   },expiration_time= timedelta(days=STANDARD_EXPIRATION_JWT_TIME),is_refresh=True
                )
                return {
                    "message":"Login has been successfully done!",
@@ -192,8 +195,8 @@ class CologneCRUD():
        jti = payload.get("jti")
        exp = payload.get("exp")
        time_now = datetime.now(timezone.utc).timestamp()  
-       remaining_time = int(exp - time_now)
-       await token_black_list.set(name=jti,ex=remaining_time,value="")  
+       remaining_time = exp - time_now
+       await token_block_list.set(name=jti,ex=remaining_time,value="")  
        return JSONResponse(
            status_code=201,
            content={

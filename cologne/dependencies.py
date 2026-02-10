@@ -2,17 +2,21 @@
 
 from fastapi.security import OAuth2PasswordBearer 
 from .utils import decode_JWT
+from .database import get_session
 from fastapi.exceptions import HTTPException
+from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+from .models import CustomersDB
 from fastapi import status, Depends
-from .redis_config import token_black_list
+from .redis_config import token_block_list
 from typing import List
 from pydantic import BaseModel
-from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh
+from .error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh,EmailNotVerified
 token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/signIn") #Busca o acesstoken no dicionario retornado pelo signIn
 async def get_user_info(token:str = Depends(token_bearer)):
     token_data:dict = decode_JWT(token)
     jti = token_data.get("jti")
-    check_token = await token_black_list.get(jti)
+    check_token = await token_block_list.get(jti)
     if check_token is not None:
         raise TokenAlreadyInBlackList()
     elif token_data is None:
@@ -42,5 +46,14 @@ class RoleChecker():
             required_role=self.roles,
             user_role=user_data.get("role")
         )
-        
-
+async def verify_email(session:AsyncSession = Depends(get_session),payload:dict = Depends(get_user_info)):
+    user_info:dict = payload.get("user_information")
+    email = user_info.get("username")
+    command = select(CustomersDB.is_verified).where(email==CustomersDB.email)   
+    result = await session.exec(command)
+    verified = result.first()
+    if verified:
+        return True
+    else:
+        raise EmailNotVerified()
+#Add the dependency in almost all routes

@@ -27,6 +27,9 @@ class User(UserClient):
     is_verified:bool = False
     role:Optional[str]
     token:uuid.UUID
+    expiry_token_time:datetime
+    reset_password_token:str | None
+    expiry_reset_token_time:datetime |None
 class UserUpdate(BaseModel):
     email:str
     hash_password:str
