@@ -1,11 +1,11 @@
 from sqlmodel.ext.asyncio.session import AsyncSession
-from cologne.database import get_session,async_engine
+from src.db.database import get_session,async_engine
 from sqlmodel import SQLModel
-from cologne.models import CustomersDB 
-from cologne.utils import get_hash
+from src.db.models import CustomersDB 
+from src.auth.utils_security import get_hash
 from sqlalchemy.orm import sessionmaker
 from contextlib import asynccontextmanager
-from cologne.config_env import password
+from src.config.config_env import password
 import asyncio
 async def create_Luis():
     print("oi")
