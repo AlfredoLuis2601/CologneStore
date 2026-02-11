@@ -2,4 +2,11 @@
 Info.md
 git_setup.md
 data_migration
-cologne/data_migration
+src/__pycache__
+src/auth/__pycache__
+src/cologne/__pycache__
+src/config/__pycache__
+src/tasks/__pycache__
+src/mail_support/__pycache__
+src/db/__pycache__
+
