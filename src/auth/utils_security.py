@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 import jwt
 from jwt.exceptions import ExpiredSignatureError
 from datetime import datetime,timedelta,timezone 
-from src.config.config_env import jwt_key,jwt_algorithm
+from src.config.config_env import jwt_key,jwt_algorithm,default_time_delta
 import logging
 import uuid
 password_context = CryptContext(
@@ -17,11 +17,11 @@ def get_password(hash:str,password:str)->bool:
     is_Verified = password_context.verify(hash=hash,secret=password)
     return is_Verified
 
-DEFAULT_TIMEDELTA = 3600 # Time in minutes
+
 
 def generate_JWT(user_data:dict,expiration_time:timedelta = None,is_refresh:bool = False)->str:
    if expiration_time is None:
-       time = timedelta(seconds=DEFAULT_TIMEDELTA)
+       time = timedelta(seconds=default_time_delta)
        expiry= datetime.now(timezone.utc) + time 
    else:
        expiry = datetime.now(timezone.utc) + expiration_time
@@ -47,6 +47,6 @@ def decode_JWT(token:str):
         key=jwt_key
     )
       return payload
-    except (jwt.PyJWKError,ExpiredSignatureError) as error: #Normally the error is that the token expirate
+    except (jwt.PyJWKError,ExpiredSignatureError) as error: #Normally the error is that the token expired.
         logging.exception(error)
         return None 

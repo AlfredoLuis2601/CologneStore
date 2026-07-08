@@ -92,6 +92,8 @@ class EmailTokenExpired(ErrorHandling):
     """Email token expired."""
 class DifferentPassword(ErrorHandling):
     """The confirmed password was different than the previous one."""
+class UserAlreadyVerified(ErrorHandling):
+    pass
 def create_exception_handler(status_code:int,detail:Any)->Callable[[Request,Exception],JSONResponse]:
     #Request seria todo o request body retornado e a exception seria a minha custom exception lançada
     async def exception_handler(request:Request,exc:Exception)->JSONResponse:
@@ -224,3 +226,7 @@ def add_all_exceptions(my_app:FastAPI):
           "error_code":"DifferentPasswords"
       }
   ))
+  my_app.add_exception_handler(UserAlreadyVerified,create_exception_handler(status_code=400,detail={
+      "error_message":"User has already been verified",
+      "error_code":"UserAlreadyVerified"
+  }))

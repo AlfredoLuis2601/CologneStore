@@ -1,13 +1,11 @@
 from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlmodel import create_engine,text,SQLModel
+from sqlmodel import create_engine
 from sqlalchemy.exc import OperationalError 
 from src.config.config_env import url_database
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import sessionmaker
-from src.auth.utils_security import get_hash
-from src.config.config_env import password
-import asyncio
-from src.db.models import CustomersDB
+
+
 async_engine = AsyncEngine(
     create_engine(
         url=url_database,

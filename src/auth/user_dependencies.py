@@ -1,25 +1,23 @@
 from fastapi.security import OAuth2PasswordBearer 
 from .utils_security import decode_JWT
-from src.db.database import get_session
-from fastapi.exceptions import HTTPException
+from src.config.database import get_session
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
-from src.db.models import CustomersDB
+from src.auth.models import CustomersDB
 from fastapi import status, Depends
-from src.tasks.redis_config import token_block_list
+from src.config.redis_config import token_block_list
 from typing import List
-from pydantic import BaseModel
-from src.config.error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh,EmailNotVerified
-token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/signIn") #Busca o acesstoken no dicionario retornado pelo signIn
+from src.config.error_handling import TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,RolePermission,GenerateRefresh,EmailNotVerified
+token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/sign_in_swagger") #Busca o acesstoken no dicionario retornado pelo signIn
 async def get_user_info(token:str = Depends(token_bearer)):
     token_data:dict = decode_JWT(token)
-    jti = token_data.get("jti")
+    if token_data is None:
+        raise InvalidToken()
+    jti = token_data.get("jti") 
     check_token = await token_block_list.get(jti)
     if check_token is not None:
         raise TokenAlreadyInBlackList()
-    elif token_data is None:
-        raise InvalidToken()
-    elif token_data["refresh"]:
+    if token_data["refresh"]:
         raise RefreshTokenToAccess()
     return token_data
 def get_token_payload(token:str):
@@ -32,6 +30,7 @@ def verify_refresh_token(token:str = Depends(token_bearer)):
         raise InvalidToken()
     elif token_data is not None and not token_data["refresh"]:
         raise GenerateRefresh()
+    return token_data
 class RoleChecker():   
   def __init__(self,roles:List[str]):
     self.roles = roles

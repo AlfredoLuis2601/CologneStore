@@ -2,20 +2,12 @@ from fastapi_mail import FastMail,ConnectionConfig,MessageSchema,MessageType
 from pydantic import BaseModel,EmailStr
 from typing import List
 from src.config.config_env import mail_username,mail_password,mail_port,mail_server,mail_from,mail_from_name,base_url
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
-from fastapi import status
-from src.auth.schemas import User
-from sqlmodel import select
-from src.db.models import CustomersDB
-from sqlmodel.ext.asyncio.session import AsyncSession
 
-class Email(BaseModel):
-    email:List[EmailStr]
+
 class PasswordReset(BaseModel):
     new_password:str
     confirm_new_password:str
-    
+   
 config = ConnectionConfig(
     MAIL_USERNAME=mail_username,
     MAIL_PASSWORD=mail_password,
@@ -26,20 +18,18 @@ config = ConnectionConfig(
     MAIL_SSL_TLS=False,
     MAIL_FROM_NAME=mail_from_name
 )
-mail_setup = FastMail(config=config)
 
-
-def creating_email(email:Email,subject:str,body:str)->JSONResponse:
-    message = MessageSchema(
-        subject=subject,
-        recipients=email,
-        body=body,
-        subtype=MessageType.html
-    )
-    return message
-    
-    
-
+class FastMailProvider():
+    def __init__(self):
+        self.mail_setup = FastMail(config=config)
+    async def create_email(self, email:EmailStr, subject: str, html: str) -> None:
+        message = MessageSchema(
+            subject=subject,
+            recipients=[email], 
+            body=html,
+            subtype=MessageType.html
+        )
+        await self.mail_setup.send_message(message)
 
 #Garantir que o usuario so possa acessar as rotas se seu email for verificado, injecao de dependencia.
 #Fazer meu email ser verificado manualmente

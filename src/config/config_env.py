@@ -1,6 +1,9 @@
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 class Settings(BaseSettings):
+    STANDARD_EXPIRE_JWT_TIME:int = 2
+    STANDARD_TOKEN_EXPIRE_TIME:int = 30
+    DEFAULT_TIMEDELTA:int = 3600
     DATABASE_URL:str
     JWT_KEY:str
     JWT_ALGORITHM:str
@@ -30,4 +33,7 @@ mail_server = env.MAIL_SERVER
 mail_from = env.MAIL_FROM
 mail_from_name = env.MAIL_FROM_NAME
 base_url = env.BASE_URL
+standard_expire_jwt = env.STANDARD_EXPIRE_JWT_TIME
+standard_token_time = env.STANDARD_TOKEN_EXPIRE_TIME
+default_time_delta = env.DEFAULT_TIMEDELTA
 #Posteriormente sera a url do render e depois do site.

@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from src.cologne.cologne_routes import cologne_router
-from src.mail_support.mail_routes import mail_router
+from src.cologne.routes import cologne_router
 from contextlib import asynccontextmanager
-from src.db.database import start_db
-from src.auth.user_routes import customer_routes
+from src.config.database import start_db
+from src.auth.routes import customer_routes
+from src.sales.routes import sales_router
 from src.config.error_handling import add_all_exceptions
 from src.config.middleware import adding_trusted_host_middleware,create_middleware,adding_CORS_middleware
-from src.config.error_handling import EmptyInventory,UserAlreadyExist,UserNotFound,TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,CologneNotFound,DeleteCologne,WrongPassword,RolePermission,GenerateRefresh,create_exception_handler,create_unauthorized_exception_handler
 @asynccontextmanager
 async def lifespan(app:FastAPI):
    print("Application has been initialized...")
@@ -14,15 +13,30 @@ async def lifespan(app:FastAPI):
    yield
    print("Finishing application...")
 api_version = "v1"
+tags_metadata = [ {
+        "name": "Colognes",
+        "description": "Gerenciamento do catálogo de perfumes, controle de estoque e buscas.",
+    },
+    {
+        "name": "Auth",
+        "description": "Operações de autenticação, registro de clientes e gerenciamento de tokens.",
+    },
+    {
+        "name": "Sales",
+        "description": "Processamento de checkout, pedidos e histórico transacional.",
+    }
+]
 my_app = FastAPI(
     title="Cologne Store",
     description="Cologne Store REST API Simulation",
     lifespan=lifespan,
-    version=api_version
+    version=api_version,
+    openapi_tags=tags_metadata
 )
-my_app.include_router(cologne_router,prefix=f"/api/{api_version}/cologne_store")
-my_app.include_router(customer_routes,prefix=f"/api/{api_version}/cologne_store/users")
-my_app.include_router(mail_router)
+
+my_app.include_router(cologne_router,prefix=f"/api/{api_version}/cologne_store",tags=["Colognes"])
+my_app.include_router(customer_routes,prefix=f"/api/{api_version}/cologne_store/users",tags=["Auth"])
+my_app.include_router(sales_router,prefix=f"/api/{api_version}/cologne_store/sales",tags=["Sales"])
 #Adding custom exception handler to the application 
 
 add_all_exceptions(my_app)
