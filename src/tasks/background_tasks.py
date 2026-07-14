@@ -4,6 +4,7 @@ from pydantic import EmailStr
 import smtplib
 from src.config.config_env import redis_url
 import asyncio
+
 celery_app = Celery(
     broker=redis_url,
     backend=redis_url 

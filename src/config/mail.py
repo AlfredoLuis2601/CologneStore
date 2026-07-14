@@ -4,9 +4,6 @@ from typing import List
 from src.config.config_env import mail_username,mail_password,mail_port,mail_server,mail_from,mail_from_name,base_url
 
 
-class PasswordReset(BaseModel):
-    new_password:str
-    confirm_new_password:str
    
 config = ConnectionConfig(
     MAIL_USERNAME=mail_username,

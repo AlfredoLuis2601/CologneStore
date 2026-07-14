@@ -10,7 +10,7 @@ import uuid
 from pydantic import EmailStr
 from src.auth.utils_security import get_hash,get_password,generate_JWT
 from uuid import UUID
-from src.config.mail import PasswordReset
+from src.auth.schemas import PasswordReset
 from src.config.error_handling import UserAlreadyExist,EmailTokenExpired,UserAlreadyVerified,UserNotFound,WrongPassword,InvalidToken
 
 
@@ -83,9 +83,8 @@ class AuthService():
        return users
     async def delete_user(self,id:int):
        response = await self.user_repo_instance.delete(id)
-       if response:
-          return True
-       raise UserNotFound()
+       if not response:
+          raise UserNotFound()
     async def new_access_token(self,token_data:dict)->dict:
        user_info = token_data.get("user_information")
        username = user_info.get("username")
@@ -109,7 +108,7 @@ class AuthService():
     async def password_reset_email(self,email:EmailStr)->bool:
        user = await self.user_repo_instance.get_by_email(email)
        if user is None:
-          return False
+          raise UserNotFound()
        token = str(uuid.uuid4())
        expiry_time = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(minutes=standard_token_time)
        await self.user_repo_instance.save_reset_token(token,expiry_time,user)
@@ -121,7 +120,6 @@ class AuthService():
        """
        subject = "Password reset"
        email_task_queue.delay(subject,email,body)
-       return True
     async def password_reset(self,password_info:PasswordReset,key:str)->bool:
        if password_info.confirm_new_password!=password_info.new_password:
           raise WrongPassword()

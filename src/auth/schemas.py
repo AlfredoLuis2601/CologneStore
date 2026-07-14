@@ -17,6 +17,10 @@ class UserSignUp(BaseModel):
     model_config={
         "from_attributes":True
     }
+
+class PasswordReset(BaseModel):
+    new_password:str
+    confirm_new_password:str
 class User(UserClient):
     customer_id:Optional[int]
     sign_up_date:datetime

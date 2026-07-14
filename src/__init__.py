@@ -28,10 +28,18 @@ tags_metadata = [ {
 ]
 my_app = FastAPI(
     title="Cologne Store",
-    description="Cologne Store REST API Simulation",
+    description="Cologne Store REST API",
     lifespan=lifespan,
     version=api_version,
-    openapi_tags=tags_metadata
+    license_info={
+        "license":"MIT",
+        "url":"https://opensource.org/licenses/mit"
+    },
+    openapi_tags=tags_metadata,
+    docs_url=f"/api/{api_version}/docs",
+    contact={
+        "email":"luisalfredoalvesdeandrade1010@gmail.com"
+    }
 )
 
 my_app.include_router(cologne_router,prefix=f"/api/{api_version}/cologne_store",tags=["Colognes"])
