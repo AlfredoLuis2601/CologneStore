@@ -27,8 +27,6 @@ async def create_Luis():
 
 asyncio.run(create_Luis()) 
 
-postgresql://colognestoredb_user:jgltx89tYsRrXDs9KWJbmMuOvjDk26E9@dpg-d9fnn6r7uimc73f2gm7g-a/colognestoredb
-redis://red-d9fo0nbrjlhs73anpet0:6379
 
     
     
