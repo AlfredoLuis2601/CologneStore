@@ -13,6 +13,10 @@ from src.config.config_env import DATABASE_URL
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+elif DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
 config.set_main_option("sqlalchemy.url",DATABASE_URL)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
