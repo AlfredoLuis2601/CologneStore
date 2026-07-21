@@ -9,11 +9,11 @@ from src.auth.models import CustomersDB
 from src.sales.models import SalesDB
 from alembic import context
 from sqlmodel import SQLModel
-from src.config.config_env import url_database
+from src.config.config_env import DATABASE_URL
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url",url_database)
+config.set_main_option("sqlalchemy.url",DATABASE_URL)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:

@@ -1,7 +1,6 @@
 .env
 Info.md
 git_setup.md
-data_migration
 src/__pycache__
 src/auth/__pycache__
 src/cologne/__pycache__
