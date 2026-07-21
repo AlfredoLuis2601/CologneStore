@@ -4,6 +4,5 @@ set -o errexit
 
 pip install --upgrade pip
 pip install -r requirements.txt
-
-# Roda as migrações do banco de dados antes de subir o app
+pytest
 alembic upgrade head
