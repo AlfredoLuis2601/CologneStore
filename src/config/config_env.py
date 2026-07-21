@@ -21,7 +21,7 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 env = Settings()
-url_database = env.DATABASE_URL
+DATABASE_URL = env.DATABASE_URL
 jwt_key = env.JWT_KEY
 jwt_algorithm = env.JWT_ALGORITHM
 redis_url = env.REDIS_URL

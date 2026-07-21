@@ -32,7 +32,7 @@ my_app = FastAPI(
     lifespan=lifespan,
     version=api_version,
     license_info={
-        "license":"MIT",
+        "name":"MIT",
         "url":"https://opensource.org/licenses/mit"
     },
     openapi_tags=tags_metadata,

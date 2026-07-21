@@ -1,16 +1,16 @@
-from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlmodel import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.exc import OperationalError 
-from src.config.config_env import url_database
+from src.config.config_env import DATABASE_URL
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-
-async_engine = AsyncEngine(
-    create_engine(
-        url=url_database,
-        echo=False
-    )
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+elif DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
+async_engine = create_async_engine(
+    url=DATABASE_URL,
+    echo=False
 )
 
 async def start_db():
