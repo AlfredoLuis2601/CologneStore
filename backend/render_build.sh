@@ -5,4 +5,4 @@ set -o errexit
 pip install --upgrade pip
 pip install -r backend/requirements.txt
 pytest backend/tests
-alembic -c backend/alembic.ini upgrade head
+PYTHONPATH=. alembic -c backend/alembic.ini upgrade head
