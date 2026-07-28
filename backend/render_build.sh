@@ -4,5 +4,5 @@ set -o errexit
 
 pip install --upgrade pip
 pip install -r backend/requirements.txt
-pytest
+pytest backend/tests
 alembic -c backend/alembic.ini upgrade head
