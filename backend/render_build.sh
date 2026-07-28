@@ -3,6 +3,6 @@
 set -o errexit
 
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 pytest
 alembic -c backend/alembic.ini upgrade head
