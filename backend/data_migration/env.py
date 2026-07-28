@@ -4,12 +4,12 @@ from logging.config import fileConfig
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
-from src.cologne.models import CologneInformationDB
-from src.auth.models import CustomersDB
-from src.sales.models import SalesDB
+from backend.src.cologne.models import CologneInformationDB
+from backend.src.auth.models import CustomersDB
+from backend.src.sales.models import SalesDB
 from alembic import context
 from sqlmodel import SQLModel
-from src.config.config_env import DATABASE_URL
+from backend.src.config.config_env import DATABASE_URL
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
