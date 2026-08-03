@@ -14,9 +14,8 @@ cologne_router = APIRouter()
 admin_role_checker = RoleChecker(["admin"])
 user_role_checker = RoleChecker(["User","admin"])
 
-@cologne_router.get("/",response_model=List[Cologne],status_code=status.HTTP_200_OK)
-async def get_colognes(service:ColognesService = Depends(get_cologne_service),user_info = Depends(get_user_info),
-role:str = Depends(admin_role_checker.check_role),is_verified = Depends(verify_email)):
+@cologne_router.get("/products",response_model=List[Cologne],status_code=status.HTTP_200_OK)
+async def get_colognes(service:ColognesService = Depends(get_cologne_service)):
     colognes = await service.get_colognes()
     if colognes is not None:
         return colognes

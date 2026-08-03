@@ -18,7 +18,7 @@ def adding_trusted_host_middleware(app:FastAPI):
     app.add_middleware(TrustedHostMiddleware,allowed_hosts=["*"])
     #allowing all hosts by now.
 origins =     [
-    "http://localhost",
+    "http://localhost:5173",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "*"

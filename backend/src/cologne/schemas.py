@@ -7,6 +7,7 @@ class CologneClient(BaseModel):
    type:str
    amount:int = 0
    price:float 
+   image_url:str
    model_config = {
         "from_attributes": True
     }

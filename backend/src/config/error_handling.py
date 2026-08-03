@@ -220,7 +220,7 @@ def add_all_exceptions(my_app:FastAPI):
       }
   ))
   my_app.add_exception_handler(DifferentPassword,create_exception_handler(
-      status_code=404,detail={
+      status_code=400,detail={
           "error_message":" User sent different passwords",
           "solution":"Type the password again.",
           "error_code":"DifferentPasswords"

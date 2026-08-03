@@ -10,4 +10,5 @@ class CologneInformationDB(SQLModel,table=True):
     type:str = Field(index=True)
     price:float = Field(nullable=False)
     amount:int = Field(default=0,ge=0)
+    image_url:str = Field(index=True)
 
