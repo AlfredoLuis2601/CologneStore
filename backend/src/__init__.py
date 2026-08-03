@@ -41,7 +41,9 @@ my_app = FastAPI(
         "email":"luisalfredoalvesdeandrade1010@gmail.com"
     }
 )
-
+@my_app.get("/")
+def read_root():
+    return {"status": "online", "message": "Cologne Store API is running!"}
 my_app.include_router(cologne_router,prefix=f"/api/{api_version}/cologne_store",tags=["Colognes"])
 my_app.include_router(customer_routes,prefix=f"/api/{api_version}/cologne_store/users",tags=["Auth"])
 my_app.include_router(sales_router,prefix=f"/api/{api_version}/cologne_store/sales",tags=["Sales"])
