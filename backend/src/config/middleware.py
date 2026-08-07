@@ -21,10 +21,9 @@ origins =     [
     "http://localhost:5173",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "*"
 ]
 def adding_CORS_middleware(app:FastAPI):
     app.add_middleware(
-        CORSMiddleware,allow_origins=origins,allow_headers=["*"],allow_methods=["*"]
+        CORSMiddleware,allow_origins=origins,allow_headers=["*"],allow_methods=["*"],allow_credentials=True
     )
     
