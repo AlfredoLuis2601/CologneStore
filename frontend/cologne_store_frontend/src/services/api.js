@@ -1,5 +1,5 @@
 import axios from "axios"
-import { errorHandler } from "../utils/apiErrorHandling"
+
 //Começando a entender axios (conexão API com meu site)
 
 const api = axios.create({
@@ -7,13 +7,5 @@ const api = axios.create({
     headers:{"X-Custom-Header":"foobar"},
     timeout:10000
 });
-
-async function getColognes() {
-    try{
-      const response = await api.get("/products");
-      return response;
-    }catch(e){
-      errorHandler(e);
-    }
-}
-
+export default api
+//Adicionar erros retornados por falta de jwt, rolePermission
