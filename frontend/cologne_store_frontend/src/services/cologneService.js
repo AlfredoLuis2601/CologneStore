@@ -4,10 +4,19 @@ import api from "./api.js"
 async function getColognes() {
     try{
       const response = await api.get("/products");
-      console.log(response.data)
       return response?.data;
     }catch(e){
       errorHandler(e);
     }
 }
-export default getColognes
+export default getColognes;
+
+export async function getCologneByName(name){
+   try{
+    const response = await api.get(`/${name}`);
+    console.log("Request sent.");
+    return response?.data;
+   }catch(e){
+    errorHandler(e);
+   }
+}

@@ -3,6 +3,7 @@ from backend.src.cologne.interface import CologneRepoInterface
 from backend.src.cologne.models import CologneInformationDB
 from backend.src.cologne.schemas import Cologne,CologneClient,UpdateCologne
 from sqlmodel import select
+from sqlalchemy import func
 from uuid import UUID
 class CologneRepo(GenericSQLModelRepository[Cologne,CologneClient,UUID],CologneRepoInterface):
     def __init__(self, session):
@@ -21,7 +22,7 @@ class CologneRepo(GenericSQLModelRepository[Cologne,CologneClient,UUID],CologneR
          else:
              return False
     async def get_by_name(self,cologne_name:str)->Cologne:
-        command = select(self.cls_model).where(cologne_name==self.cls_model.name)
+        command = select(self.cls_model).where(cologne_name.lower()==func.lower(self.cls_model.name))
         result = await self.session.exec(command)
         cologne = result.first()
         if cologne is not None:

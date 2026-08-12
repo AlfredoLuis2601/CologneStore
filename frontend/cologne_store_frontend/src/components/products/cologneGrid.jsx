@@ -2,11 +2,11 @@ import CologneCard from "./cologneCard.jsx"
 import getColognes from "../../services/cologneService.js"
 import { useEffect, useState } from "react"
 import ErrorUI from "../ui/errorState.jsx"
+import "./cologneGrid.css"
+import "./cologneCard.css"
 import SkeletonCard from "../ui/loadingState.jsx"
-export default function CologneGrid(){
+export default function CologneGrid({loading,setLoading,error,setError}){
    const [colognes,setColognes] = useState([]); // Começando em branco
-   const [loading,setLoading] = useState(null);
-   const [error,setError] = useState(null);
    
    useEffect(()=>{
      async function loadData(){
@@ -33,8 +33,7 @@ export default function CologneGrid(){
      }
     loadData();
    },[])
-   if(error) return(<ErrorUI code={error.code} message={error.message} variant={error.variant}/>)
-   if(loading) return(<SkeletonCard/>) //Loading Skeleton
+
    return(
     <ul className="cologne-grid">
       {colognes.map(cologne=>{

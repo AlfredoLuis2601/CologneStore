@@ -1,50 +1,55 @@
-
+*{
+  box-sizing: border-box;
+}
 .cologne-card {
   list-style: none;
   background-color: #ffffff;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border: 0;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
 }
 .cologne-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgb(122, 121, 121,1);
 }
 
 .cologne-img-wrapper {
   width: 100%;
-  aspect-ratio: 1 / 1; 
+  aspect-ratio: 1/1;
   overflow: hidden;
-  background-color: #f8fafc;
+  background-color: rgb(119, 118, 118,0.2);
 }
 
 .cologne-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  height: 250px;
+  
 }
 
 .cologne-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 0.875rem 1rem;
-  gap: 0.5rem;
+  gap: 0.2rem;
+  background-color: #022419;
 }
 
 .cologne-titles {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.1rem;
+  margin: 0;
 }
 
 .cologne-brand {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #64748b;
+  color: #e2e8f0;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -52,12 +57,12 @@
 .cologne-name {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #ffffff;
   line-height: 1.2;
 }
 
 .sales-info {
-  text-align: right;
+  text-align: center;
   white-space: nowrap; 
 }
 

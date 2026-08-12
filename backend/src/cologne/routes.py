@@ -63,3 +63,5 @@ role:str = Depends(admin_role_checker.check_role),service:ColognesService = Depe
         )
     else:
         raise DeleteCologne()
+
+#Create the getById route and the getByPrefix

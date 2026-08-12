@@ -1,10 +1,12 @@
 import priceCurrency from "../../utils/priceFormat.js"
-
+import "./cologneCard.css"
+import { Link } from "react-router"
 function CologneCard({cologne}){
     //Add o component link para ir para a pagina /cologne:id/...id do perfume
    return(
+    <Link to={`/colognedetails/${cologne.uid}`}>
     <li className="cologne-card"> 
-    <article>
+    <article className ="cologne-box">
         <div className ="cologne-img-wrapper">
           <img className="cologne-img"src={cologne.image_url} alt={cologne.name}/>
         </div>
@@ -19,6 +21,7 @@ function CologneCard({cologne}){
         </div>
     </article>
     </li>
+    </Link>
    )
 }
 

@@ -1,0 +1,16 @@
+.home-box{
+   margin:0;
+}
+
+.home-page-title{
+   letter-spacing: 0.1rem;
+   color: rgb(1, 80, 1);
+}
+.title-container{
+   display: flex;
+   flex-direction: row;
+   gap:0.5rem;
+}
+.cologne-icon{
+   width: 5rem;
+}
