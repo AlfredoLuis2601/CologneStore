@@ -4,7 +4,7 @@ import { Link } from "react-router"
 function CologneCard({cologne}){
     //Add o component link para ir para a pagina /cologne:id/...id do perfume
    return(
-    <Link to={`/colognedetails/${cologne.uid}`}>
+    <Link to={`/colognedetails/${cologne.uid}`} style={{textDecoration:"none"}}>
     <li className="cologne-card"> 
     <article className ="cologne-box">
         <div className ="cologne-img-wrapper">

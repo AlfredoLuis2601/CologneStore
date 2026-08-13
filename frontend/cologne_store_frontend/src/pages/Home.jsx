@@ -1,21 +1,17 @@
 import CologneGrid from "../components/products/cologneGrid.jsx"
 import "../components/layout/Home.css"
 import { getCologneByName } from "../services/cologneService.js"
-import cologneImg from "../assets/home/cologne-logo.webp"
 import { useEffect, useState } from "react"
 import { Header } from "../components/layout/Header.jsx"
 import SkeletonCard from "../components/ui/loadingState.jsx"
 import { useNavigate } from "react-router"
-
+import ErrorUI from "../components/ui/errorState.jsx"
 export default function Home(){
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
     const [cologne,setCologne] = useState('');
-    //Para amanha reparar a API mudar a logica da criacao do perfume para ser sempre
-    //minusculo e no get sempre transformar o body em minusculo tb
-    //Começar component do login e ajustar o CSS
+    let navigate = useNavigate()
    async function onSearch(term){
-      let navigate = useNavigate()
       setCologne(term);
         try{
           setLoading(true);
@@ -37,7 +33,7 @@ export default function Home(){
           <Header 
             onSearch={onSearch}
           />
-          <section div className = "home-box">
+          <section className = "home-box">
             {error && 
            (<ErrorUI 
               code={error.code} 
@@ -45,15 +41,7 @@ export default function Home(){
               variant={error.variant}
             />
           )}
-          {loading && <SkeletonCard/>}
-        {!loading && !error &&(
-            <CologneGrid 
-         loading={loading}
-         setLoading={setLoading}
-         error={error}
-         setError={setError}
-         />
-        )}
+          <CologneGrid/>
         </section>
     </main>
  )
