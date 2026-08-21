@@ -1,6 +1,13 @@
-.login-container{
+.login-header-container{ 
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
-    
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    background-color: #fff;
+    color: #0f0f0f;
+    border-radius: 12px;
+    width: 6rem;
 }

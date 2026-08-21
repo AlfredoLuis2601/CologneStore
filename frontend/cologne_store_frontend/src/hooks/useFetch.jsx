@@ -10,8 +10,8 @@ export function useService(serviceFn,params=null,dataType){
         try{
          setLoading(true);
          const data = params!==null? await serviceFn(params): await serviceFn();
-         const isEmptyArray = Array.isArray(responseData) && responseData.length === 0;
-        if (!responseData || isEmptyArray) {
+         const isEmptyArray = Array.isArray(data) && data.length === 0;
+        if (!data || isEmptyArray) {
           const error = new Error("Inventory is empty.");
           error.code = "EMPTY_INVENTORY";
           error.category = "NOT_FOUND";

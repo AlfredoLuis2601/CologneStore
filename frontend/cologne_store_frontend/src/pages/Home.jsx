@@ -13,6 +13,7 @@ export default function Home(){
     let navigate = useNavigate()
    async function onSearch(term){
       setCologne(term);
+      console.log(term);
         try{
           setLoading(true);
           const cologne = await getCologneByName(term);

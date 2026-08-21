@@ -23,12 +23,7 @@ async def sign_up_users(user_data:UserClient,service:AuthService = Depends(get_a
     user = await service.sign_up(user_data)
     response = await service.verify_account_email(user)
     if response:
-      return JSONResponse(
-            content={
-                "message":"Account created succesfully."
-            },
-            status_code=201
-        )
+      return user
       
 @customer_routes.post("/signIn",response_model=dict,status_code=status.HTTP_200_OK)
 async def sign_in_users(user_data:UserClient,service:AuthService = Depends(get_auth_service)):

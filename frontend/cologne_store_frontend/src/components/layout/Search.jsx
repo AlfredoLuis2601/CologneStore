@@ -7,6 +7,7 @@ export function SearchBar({searchTerm,setSearchTerm,onSearch}){
   }
   function handleDefault(e){
     e.preventDefault();
+    onSearch(searchTerm);
   }
 
    return(

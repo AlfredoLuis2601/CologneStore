@@ -1,6 +1,5 @@
 import CologneCard from "./cologneCard.jsx"
 import getColognes from "../../services/cologneService.js"
-import {useEffect, useState } from "react"
 import ErrorUI from "../ui/errorState.jsx"
 import "./cologneGrid.css"
 import "./cologneCard.css"
@@ -9,7 +8,7 @@ import SkeletonCard from "../ui/loadingState.jsx"
 export default function CologneGrid(){
    const {data:colognes,loading,error} = useService(getColognes,null,[])
    if(loading) return <SkeletonCard/>
-   else if(error) return <ErrorUI code={error.code} message={error.message} variant={error.variant}/>
+   if(error) return <ErrorUI code={error.code} message={error.message} variant={error.variant} size="lg"/>
    return(
     <ul className="cologne-grid">
       {colognes.map(cologne=>{

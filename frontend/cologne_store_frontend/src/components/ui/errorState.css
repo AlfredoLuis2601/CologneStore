@@ -1,0 +1,15 @@
+.error-container-sm{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.error-icon-sm{
+    size: 0.75rem;
+}
+.error-message-sm{
+    font-size: 0.7rem;
+}
+/*
+ Criar o small,medium e large
+*/

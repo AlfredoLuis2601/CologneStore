@@ -3,7 +3,8 @@ import axios from "axios"
 export function errorHandler(e){
    if(e.response){
       const status = e.response.status;
-      const detail = e.response.data?.detail;
+      const detail = e.response.data
+      console.log(e.response);
       switch(status){
         case 400:{
             if(detail.error_code === "DifferentPasswords"){
@@ -62,7 +63,7 @@ export function errorHandler(e){
         }
         case 404:{
            if(detail.error_code === "UserNotFound"){
-             const error = new Error(detail.error_message,{cause:e});
+             const error = new Error(detail.message,{cause:e});
              error.code = "USER_NOT_FOUND";
              error.category = "NOT_FOUND";
              throw error;
