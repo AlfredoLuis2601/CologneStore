@@ -44,3 +44,6 @@ class ResponseToken(BaseModel):
 class UserBearer(BaseModel):
     username:str
     password:str
+
+class MailToken(BaseModel):
+    key: str

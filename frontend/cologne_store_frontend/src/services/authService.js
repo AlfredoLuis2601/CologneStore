@@ -49,6 +49,16 @@ export async function verifyMailService(key){
     }
 }
 
+export async function resendMailService(key){
+  try{
+    const response = await api.post("users/resend_mail",{
+      key: key
+    })
+    return response;
+  }catch(e){
+    errorHandler(e);
+  }
+}
 export async function logoutService(){
     
 }

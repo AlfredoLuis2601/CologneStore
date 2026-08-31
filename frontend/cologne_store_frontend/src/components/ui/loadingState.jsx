@@ -1,10 +1,11 @@
 import { LoaderCircle } from "lucide-react"
 import Skeleton from "react-loading-skeleton"
-function LoadState({message}){
+
+export function LoadState({message,size}){
   return (
-    <div className = "loading-box">
-    <LoaderCircle/>
-    <p>{message}</p>
+    <div className = {`loading-box-${size}`}>
+       <LoaderCircle/>
+       <p className={`loading-message-${size}`}>{message}</p>
     </div>
   )
 }

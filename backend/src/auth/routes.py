@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from typing import List
 from fastapi import status
 from fastapi import Depends
-from .schemas import UserClient,User,ResponseToken,UserBearer,PasswordReset
+from .schemas import MailToken,UserClient,User,ResponseToken,UserBearer,PasswordReset
 from .user_dependencies import verify_refresh_token,get_user_info,RoleChecker
 from fastapi.security import OAuth2PasswordRequestForm
 from backend.src.shared.dependencies import get_auth_service
@@ -88,7 +88,7 @@ async def change_password(token:str,password_info:PasswordReset,service:AuthServ
         }
         
 @customer_routes.post("/resend_mail", status_code=status.HTTP_200_OK)
-async def resend_mail(key: str, service: AuthService = Depends(get_auth_service)) -> dict:
+async def resend_mail(key: MailToken, service: AuthService = Depends(get_auth_service)) -> dict:
     response = await service.resend_email(key)
     return {
         "data": "Email sent succesfully!"
