@@ -27,9 +27,9 @@ def generate_JWT(user_data:dict,expiration_time:timedelta = None,is_refresh:bool
        expiry = datetime.now(timezone.utc) + expiration_time
    payload = {
        "user_information":user_data,
-       "exp":expiry, # nome padrao da chave
+       "exp":expiry, 
        "refresh":is_refresh,
-       "jti":str(uuid.uuid4()) #jti: Json Token Identifier
+       "jti":str(uuid.uuid4()) 
    }
    token = jwt.encode(
        payload= payload,
@@ -47,6 +47,6 @@ def decode_JWT(token:str):
         key=jwt_key
     )
       return payload
-    except (jwt.PyJWKError,ExpiredSignatureError) as error: #Normally the error is that the token expired.
+    except (jwt.PyJWKError,ExpiredSignatureError) as error: 
         logging.exception(error)
         return None 

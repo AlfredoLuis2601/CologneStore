@@ -6,7 +6,7 @@ import "./App.css"
 import { SignUpPage } from "./pages/SignUp.jsx"
 import { AuthLayout } from "./components/layout/AuthLayout.jsx";
 import { RequestPasswordResetPage } from "./pages/PasswordResetMailPage.jsx";
-import { VerifyMailProvider } from "./hooks/context.jsx";
+import { VerifyMailPage } from "./pages/VerifyMailPage.jsx";
 
 function App() {
   return(
@@ -15,6 +15,7 @@ function App() {
       <Route path="/auth" element={<AuthLayout/>}>
         <Route index element={<LoginPage/>}/>
         <Route path="register" element={<SignUpPage/>}/>
+        <Route path="verifymail/:key" element={<VerifyMailPage/>}/>
         <Route path="requestreset" element={<RequestPasswordResetPage/>}/>
       </Route>
     <Route path="/colognedetails/:uid" element={<CologneDetailsPage/>}/>

@@ -34,14 +34,19 @@ export async function signUpService(payload){
         email:payload.email,
         hash_password:payload.password
      })
-     console.log(response);
+     return response;
    }catch(e){
      errorHandler(e);
    }
 }
 
-export function verifyMailService(){
-    
+export async function verifyMailService(key){
+    try{
+      const response = await api.post(`/users/validate_account/${key}`);
+      return response;
+    }catch(e){
+      errorHandler(e);
+    }
 }
 
 export async function logoutService(){

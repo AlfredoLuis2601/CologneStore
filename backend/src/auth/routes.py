@@ -36,6 +36,7 @@ async def sign_swagger(user_data:OAuth2PasswordRequestForm = Depends(OAuth2Passw
     approved = await service.sign_in(obj_user)
     return approved
 
+#Create resend email route
 @customer_routes.get("/validate_account/{token}", status_code=status.HTTP_200_OK) #Option without the frontend
 @customer_routes.post("/validate_account/{token}",status_code=status.HTTP_200_OK)
 async def verify_account(token:str,service:AuthService = Depends(get_auth_service)):
@@ -85,3 +86,10 @@ async def change_password(token:str,password_info:PasswordReset,service:AuthServ
         return {
             "data": "Password reset succeeded!"
         }
+        
+@customer_routes.post("/resend_mail", status_code=status.HTTP_200_OK)
+async def resend_mail(key: str, service: AuthService = Depends(get_auth_service)) -> dict:
+    response = await service.resend_email(key)
+    return {
+        "data": "Email sent succesfully!"
+    }

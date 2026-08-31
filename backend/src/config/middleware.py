@@ -5,7 +5,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 def create_middleware(my_app:FastAPI):
  @my_app.middleware("http")
- async def register_middleware(request:Request,call_next): # request and the route(call_next)
+ async def register_middleware(request:Request,call_next): 
     before = time.time()
     response = await call_next(request)
     after = time.time()
@@ -13,7 +13,7 @@ def create_middleware(my_app:FastAPI):
     
     return response
  return register_middleware
-#ASGI custom middleware
+
 def adding_trusted_host_middleware(app:FastAPI):
     app.add_middleware(TrustedHostMiddleware,allowed_hosts=["*"])
     #allowing all hosts by now.

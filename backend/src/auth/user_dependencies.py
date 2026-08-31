@@ -8,7 +8,7 @@ from fastapi import status, Depends
 from backend.src.config.redis_config import token_block_list
 from typing import List
 from backend.src.config.error_handling import TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,RolePermission,GenerateRefresh,EmailNotVerified
-token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/sign_in_swagger") #Busca o acesstoken no dicionario retornado pelo signIn
+token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/sign_in_swagger") 
 async def get_user_info(token:str = Depends(token_bearer)):
     token_data:dict = decode_JWT(token)
     if token_data is None:
@@ -53,4 +53,4 @@ async def verify_email(session:AsyncSession = Depends(get_session),payload:dict 
         return True
     else:
         raise EmailNotVerified()
-#Add the dependency in almost all routes
+

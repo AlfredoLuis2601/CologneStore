@@ -5,6 +5,7 @@ import { CircleCheck } from "lucide-react";
 import { useVerifyMail } from "../hooks/context.jsx";
 import { useNavigate } from "react-router";
 import ErrorUI from "../components/ui/errorState.jsx";
+//Criar email expired para reenvio do email
 export function SignUpPage(){
     const {isVerified} = useVerifyMail();
     const [credentials,setCredentials] = useState({
@@ -25,7 +26,7 @@ export function SignUpPage(){
                 error.code = "EMPTY_INFO";
                 throw error;
             }
-            await signUpService(credentials);
+            const newUser = await signUpService(credentials);
             setCreated(true);
         }catch(e){
            setError({

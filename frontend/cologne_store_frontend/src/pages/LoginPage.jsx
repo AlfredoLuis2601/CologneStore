@@ -57,8 +57,8 @@ export function LoginPage(){
              />
            {user && (
             <div className="successfull-auth-box">
-             <CircleCheck className="svg-check"/>
-             <p className="successfull-auth-text">Login has been successfully done!</p>
+             <CircleCheck className="svg-check-sm"/>
+             <p className="successfull-auth-text-sm">Login has been successfully done!</p>
             </div>
            )}
            {error && (

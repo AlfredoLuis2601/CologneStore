@@ -3,9 +3,9 @@ from typing import Optional
 import uuid
 from datetime import datetime
 
-class SaleClient(BaseModel):#Request to the db and see if there is any cologne with this name 
-    uid:uuid.UUID        #and if it is available.
-    amount_bought:int        #Update the sales table and the cologne table
+class SaleClient(BaseModel):
+    uid:uuid.UUID        
+    amount_bought:int        
     email:str
     model_config = {
         "from_attributes":True

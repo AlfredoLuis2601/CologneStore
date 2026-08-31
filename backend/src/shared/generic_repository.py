@@ -12,7 +12,7 @@ class GenericSQLModelRepository(GenericRepoInterface[schema,schema_client,id_typ
         self.cls_schema = cls_schema
     
     async def add(self, object:schema_client)->schema:
-        new_object = self.cls_model.model_validate(object) #Validation from the table 
+        new_object = self.cls_model.model_validate(object) 
         self.session.add(new_object)
         await self.session.commit() 
         await self.session.refresh(new_object) 

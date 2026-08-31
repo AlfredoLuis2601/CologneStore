@@ -20,12 +20,12 @@ class AuthRepo(GenericSQLModelRepository[User,UserClient,int],UserRepoInterface)
         user = result.first()
         return user
     async def get_by_token(self, token):
-        command = select(CustomersDB).where(CustomersDB.token==token) #If it fails return None and call error handling
+        command = select(CustomersDB).where(CustomersDB.token==token) 
         result = await self.session.exec(command)
         user = result.first()
         return user
     async def get_by_reset_token(self,token):
-        command = select(CustomersDB).where(CustomersDB.reset_password_token==token) #If it fails return None and call error handling
+        command = select(CustomersDB).where(CustomersDB.reset_password_token==token) 
         result = await self.session.exec(command)
         user = result.first()
         return user
@@ -36,6 +36,7 @@ class AuthRepo(GenericSQLModelRepository[User,UserClient,int],UserRepoInterface)
         await self.session.commit()
         await self.session.refresh(user)
     async def save_verify_token(self, token, expiry_time, user):
+        user.token = None
         user.token = token
         user.expiry_token_time = expiry_time
         self.session.add(user)

@@ -3,7 +3,7 @@ from backend.src.auth.schemas import User,UserClient,UserUpdate
 from backend.src.auth.models import CustomersDB
 from typing import List
 from datetime import datetime,timedelta,timezone
-from backend.src.config.config_env import standard_token_time,base_url,standard_expire_jwt
+from backend.src.config.config_env import standard_token_time,base_url,standard_expire_jwt,frontend_base_url
 from backend.src.tasks.background_tasks import email_task_queue
 from backend.src.config.redis_config import token_block_list
 import uuid
@@ -30,7 +30,7 @@ class AuthService():
        token = uuid.uuid4()
        expiry_token_time = timedelta(minutes=standard_token_time) + datetime.now(timezone.utc).replace(tzinfo=None)
        await self.user_repo_instance.save_verify_token(token,expiry_token_time,user)
-       link = f"{base_url}/api/v1/cologne_store/users/validate_account/{str(token)}"
+       link = f"{frontend_base_url}/auth/verifymail/{str(token)}"
        subject = "Verify account"
        body = f"""<h1>Welcome to the Cologne Store Website!</h1>
              <p>To finish your sign up, click on the link</p>
@@ -132,6 +132,27 @@ class AuthService():
        hash_password = get_hash(password_info.new_password)
        await self.user_repo_instance.save_password(user,hash_password)
        return True
+    async def resend_email(self, key:str) -> None:
+       time_now = datetime.now(timezone.utc).replace(tzinfo=None)
+       try:
+         key_uuid = UUID(key)
+       except ValueError:
+          raise InvalidToken()
+       user = await self.user_repo_instance.get_by_token(key_uuid)
+       if not user:
+          raise InvalidToken()
+       if time_now > user.expiry_token_time:
+          new_key = uuid.uuid4()
+          expiry_time = time_now + timedelta(minutes=standard_token_time)
+          await self.user_repo_instance.save_verify_token(new_key,expiry_time,user)
+       link = f"{frontend_base_url}/auth/verifymail/{str(new_key)}"
+       subject = "Verify account"
+       body = f"""<h1>Welcome to the Cologne Store Website!</h1>
+                     <p>To finish your sign up, click on the link</p>
+                     <a href="{link}">{link}</a>
+                  """
+       email_task_queue.delay(subject,user.email,body)
+         
        
     
     

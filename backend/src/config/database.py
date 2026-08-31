@@ -17,12 +17,12 @@ async def start_db():
     try:
       async with async_engine.begin() as connect:
          print("Starting connection with the database.")
-    except OperationalError as error:#OperationalError from sqlalchemy.exc handle all the operational database errors.
+    except OperationalError as error:
         print("Connection with the database failed.") 
     finally:
         print("Succesfull connection with the database.")                      
  
-#Create my session class with sessionmaker in the get_session
+
 
 async def get_session():
     Session = sessionmaker(
@@ -31,8 +31,8 @@ async def get_session():
         class_=AsyncSession,
         autoflush=False
     )
-    async with Session() as session: #Generator
-        yield session #return de generators
+    async with Session() as session: 
+        yield session 
 
 
        

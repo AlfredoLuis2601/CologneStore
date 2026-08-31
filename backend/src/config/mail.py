@@ -8,10 +8,10 @@ from backend.src.config.config_env import mail_username,mail_password,mail_port,
 config = ConnectionConfig(
     MAIL_USERNAME=mail_username,
     MAIL_PASSWORD=mail_password,
-    MAIL_PORT=mail_port, #starttls port
+    MAIL_PORT=mail_port, 
     MAIL_SERVER=mail_server,
     MAIL_FROM=mail_from,
-    MAIL_STARTTLS=True, #Connection via starttls protocol
+    MAIL_STARTTLS=True, 
     MAIL_SSL_TLS=False,
     MAIL_FROM_NAME=mail_from_name
 )
@@ -28,8 +28,7 @@ class FastMailProvider():
         )
         await self.mail_setup.send_message(message)
 
-#Garantir que o usuario so possa acessar as rotas se seu email for verificado, injecao de dependencia.
-#Fazer meu email ser verificado manualmente
+
 
 
 
