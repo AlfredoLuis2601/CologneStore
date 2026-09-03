@@ -11,8 +11,8 @@ config = ConnectionConfig(
     MAIL_PORT=mail_port, 
     MAIL_SERVER=mail_server,
     MAIL_FROM=mail_from,
-    MAIL_STARTTLS=True, 
-    MAIL_SSL_TLS=False,
+    MAIL_STARTTLS=False, 
+    MAIL_SSL_TLS=True,
     MAIL_FROM_NAME=mail_from_name,
     TIMEOUT=20
 )
