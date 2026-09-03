@@ -11,14 +11,9 @@ class Settings(BaseSettings):
     JWT_ALGORITHM:str
     REDIS_URL:str 
     ADM_PASSWORD:str
-    MAIL_USERNAME:str
-    MAIL_PASSWORD:str
-    MAIL_PORT:int
-    MAIL_SERVER:str
-    MAIL_FROM:str
-    MAIL_FROM_NAME:str
     BASE_URL:str
     FRONTEND_BASE_URL:str
+    RESEND_API_KEY:str
     model_config=SettingsConfigDict(
         env_file=BASE_DIR/".env",
         extra="ignore"
@@ -40,3 +35,4 @@ standard_expire_jwt = env.STANDARD_EXPIRE_JWT_TIME
 standard_token_time = env.STANDARD_TOKEN_EXPIRE_TIME
 default_time_delta = env.DEFAULT_TIMEDELTA
 frontend_base_url = env.FRONTEND_BASE_URL
+resend_api_key = env.RESEND_API_KEY
