@@ -25,10 +25,10 @@ export function VerifyMailProvider({children}){
 }
 
 export function PasswordResetProvider({children}){
-    const [reset,setIsReset] = useState(null);
+    const [reset,setReset] = useState(null);
 
     return(
-        <PasswordResetContext value={{reset,setIsReset}}>
+        <PasswordResetContext value={{reset,setReset}}>
             {children}
         </PasswordResetContext>
     )

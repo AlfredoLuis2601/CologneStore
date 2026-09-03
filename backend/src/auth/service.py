@@ -112,7 +112,7 @@ class AuthService():
        token = str(uuid.uuid4())
        expiry_time = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(minutes=standard_token_time)
        await self.user_repo_instance.save_reset_token(token,expiry_time,user)
-       link = f"{frontend_base_url}/change_password/{token}"
+       link = f"{frontend_base_url}/auth/passwordreset/{token}"
        body = f"""
          <h1>Password reset email</h1>
          <p>Hello dear customer, having trouble with your current password?</p>

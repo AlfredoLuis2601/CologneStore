@@ -87,6 +87,7 @@ export function AuthPasswordForms({handleClick, payload, setPayload}){
          name="new_password"
          placeholder="Enter your new password:"
          value={payload.new_password}
+         onChange={handleChange}
          />
       </label>
        <label htmlFor="confirm_new_password">
