@@ -13,7 +13,8 @@ config = ConnectionConfig(
     MAIL_FROM=mail_from,
     MAIL_STARTTLS=True, 
     MAIL_SSL_TLS=False,
-    MAIL_FROM_NAME=mail_from_name
+    MAIL_FROM_NAME=mail_from_name,
+    TIMEOUT=20
 )
 
 class FastMailProvider():

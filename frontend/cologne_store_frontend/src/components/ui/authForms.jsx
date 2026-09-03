@@ -54,6 +54,7 @@ export function AuthMailForms({handleClick, email, setEmail}){
          name="email"
          placeholder="Enter your email:"
          value={email}
+         onChange={handleChange}
          />
       </label>
       <button className="auth-button" type="submit">
@@ -96,6 +97,7 @@ export function AuthPasswordForms({handleClick, payload, setPayload}){
          name="confirm_new_password"
          placeholder="Confirm your new password:"
          value={payload.confirm_new_password}
+         onChange={handleChange}
          />
       </label>
       <button className="auth-button" type="submit">

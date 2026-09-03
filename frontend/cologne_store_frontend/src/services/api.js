@@ -39,7 +39,8 @@ api.interceptors.response.use(
     return api(originalRequest);
   }catch(InvalidToken){
      //Redirecionar para a janela de login e limpar token invalido 
-     localStorage.clear();
+     localStorage.removeItem("access_token");
+      delete api.defaults.headers.common["Authorization"]
      window.location.replace("/login");
      return Promise.reject(InvalidToken); //Interrompe o programa original para realocar para login
   }
