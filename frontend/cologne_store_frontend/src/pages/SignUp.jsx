@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { AuthForms } from "../components/ui/authForms.jsx";
 import { signUpService } from "../services/authService.js";
 import { CircleCheck } from "lucide-react";
-import { useVerifyMail } from "../hooks/context.jsx";
 import { useNavigate } from "react-router";
-import ErrorUI from "../components/ui/errorState.jsx";
-//Criar email expired para reenvio do email
+import { useVerifyMail } from "../hooks/context.jsx";
+
 export function SignUpPage(){
-    const {isVerified} = useVerifyMail();
     const [credentials,setCredentials] = useState({
         email:"",
         password:""
@@ -16,6 +14,8 @@ export function SignUpPage(){
     const [error,setError] = useState(null);
     const [loading,setLoading] = useState(false);
     const [created,setCreated] = useState(null);
+    const {isVerified,setIsVerified} = useVerifyMail();
+    
     async function signUpHandler(){
         try{
             setLoading(true);
@@ -39,11 +39,24 @@ export function SignUpPage(){
             setLoading(false);
         }
     }
-    if(isVerified){
-        setTimeout(()=>{
-           navigate("/auth")
-        },2000)
+    useEffect(()=>{
+     let timerId = null;
+     const handleStorage = (event) =>{
+        if(event.key == "verified" && event.newValue == "true"){
+          localStorage.removeItem("verified");
+          setIsVerified(true);
+          timerId = setTimeout(()=>{
+            navigate("/auth",{replace:true});
+          },2500)
+        }
+     }
+     window.addEventListener("storage",handleStorage);
+     return () => {window.removeEventListener("storage",handleStorage);
+       if(timerId){
+      clearTimeout(timerId);
+       }
     }
+    },[navigate])
     return (
          <>
          {isVerified? (
@@ -56,29 +69,21 @@ export function SignUpPage(){
         )
          :
          (<>
-           <div className="auth-page-title-box">
-            <h2>Sign Up</h2>
-           </div>
-           <AuthForms func={signUpHandler}
-            credentials={credentials}
-            setCredentials={setCredentials}
-            />
+            <AuthStructureLayout
+                title= "Sign Up"
+                loading = {loading}
+                error={error}
+                success={created} 
+                message="Account has been successfully created!"         
+             >
+              <AuthForms func={signUpHandler}
+                credentials={credentials}
+                setCredentials={setCredentials}
+              />
+            </AuthStructureLayout>
+  
          </>)
-         }
-         {created && (
-            <div className="successfull-auth-box">
-             <CircleCheck className="svg-check-sm"/>
-             <p className="successfull-auth-text-sm">Account has been successfully created!</p>
-            </div>
-         )}
-         {error && (
-             <ErrorUI
-               code={error.code}
-               message={error.message}
-               variant={error?.variant}
-               size="sm"
-             />
-           )}
+       }
        </>
     )
 }

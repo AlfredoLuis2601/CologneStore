@@ -6,6 +6,7 @@ import { Header } from "../components/layout/Header.jsx"
 import SkeletonCard from "../components/ui/loadingState.jsx"
 import { useNavigate } from "react-router"
 import ErrorUI from "../components/ui/errorState.jsx"
+
 export default function Home(){
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);

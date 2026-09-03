@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from typing import List
 from fastapi import status
 from fastapi import Depends
-from .schemas import MailToken,UserClient,User,ResponseToken,UserBearer,PasswordReset
+from .schemas import EmailSchema,MailToken,UserClient,User,ResponseToken,UserBearer,PasswordReset
 from .user_dependencies import verify_refresh_token,get_user_info,RoleChecker
 from fastapi.security import OAuth2PasswordRequestForm
 from backend.src.shared.dependencies import get_auth_service
@@ -69,8 +69,8 @@ async def delete_user(id:int,service:AuthService = Depends(get_auth_service),rol
             }
         )
 @customer_routes.post("/password_reset",status_code=status.HTTP_200_OK) 
-async def send_mail_reset(email:EmailStr,service:AuthService = Depends(get_auth_service),role:str = Depends(user_role_checker.check_role))->JSONResponse:
-    await service.password_reset_email(email)
+async def send_mail_reset(payload: EmailSchema,service:AuthService = Depends(get_auth_service))->JSONResponse:
+    await service.password_reset_email(payload.email)
     return JSONResponse(
         content={
             "message":"Email has been sent succesfully!"
@@ -80,7 +80,7 @@ async def send_mail_reset(email:EmailStr,service:AuthService = Depends(get_auth_
     
 @customer_routes.get("/password_reset/{token}",status_code=status.HTTP_200_OK)
 @customer_routes.post("/password_reset/{token}",status_code=status.HTTP_200_OK)
-async def change_password(token:str,password_info:PasswordReset,service:AuthService = Depends(get_auth_service),role:str = Depends(admin_role_checker.check_role)):
+async def change_password(token:str,password_info:PasswordReset,service:AuthService = Depends(get_auth_service)):
     response = await service.password_reset(password_info=password_info,key=token)
     if response:
         return {

@@ -16,7 +16,7 @@ export function SearchBar({searchTerm,setSearchTerm,onSearch}){
    return(
      <form className="search-box" onSubmit={handleDefault}>
        <input className="search-input"type="text" placeholder="Search:" value={searchTerm} onChange={cologneOnChange}/>
-       <button className="search-button"type="submit" onClick={onSearch}><Search/></button>
+       <button className="search-button"type="submit"><Search/></button>
      </form>
    )
 }

@@ -2,10 +2,9 @@ import { useState } from "react"
 import { useUser } from "../hooks/context"
 import { AuthForms } from "../components/ui/authForms"
 import { Link, useNavigate } from "react-router"
-import { CircleCheck } from "lucide-react"
 import { loginService } from "../services/authService"
 import {jwtDecode} from "jwt-decode"
-import ErrorUI from "../components/ui/errorState"
+import { AuthStructureLayout } from "../components/layout/AuthLayout.jsx"
 
 export function LoginPage(){
     let navigate = useNavigate();
@@ -49,26 +48,18 @@ export function LoginPage(){
     }
     return (
            <>
-             <div className="auth-page-title-box">
-               <h2 className="title">Login</h2>
-             </div>
-             <AuthForms func={handleClick} credentials={credentials} 
-           setCredentials={setCredentials}
-             />
-           {user && (
-            <div className="successfull-auth-box">
-             <CircleCheck className="svg-check-sm"/>
-             <p className="successfull-auth-text-sm">Login has been successfully done!</p>
-            </div>
-           )}
-           {error && (
-             <ErrorUI
-               code={error.code}
-               message={error.message}
-               variant={error.variant}
-               size="sm"
-             />
-           )}
+            <AuthStructureLayout
+              title= "Login Page"
+              loading = {loading}
+              error={error}
+              successMessage={user}          
+             >
+                <AuthForms
+                  handleClick={handleClick}
+                  credentials={credentials}
+                  setCredentials={setCredentials}
+                 />
+              </AuthStructureLayout>
            <div className="support-links-box">
               <Link className="auth-support-link" to="/auth/requestreset" style={{textDecoration:"none"}}>Forgot password?</Link>
               <Link className="auth-support-link" to="/auth/register" style={{textDecoration:"none"}}>Don't have an account yet?</Link>

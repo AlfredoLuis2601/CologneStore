@@ -1,7 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 from datetime import datetime
 from typing import Optional
 import uuid
+
 
 class UserClient(BaseModel):
     email:str
@@ -47,3 +48,5 @@ class UserBearer(BaseModel):
 
 class MailToken(BaseModel):
     key: str
+class EmailSchema(BaseModel):
+    email: EmailStr

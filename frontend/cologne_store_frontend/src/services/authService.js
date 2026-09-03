@@ -62,3 +62,23 @@ export async function resendMailService(key){
 export async function logoutService(){
     
 }
+
+export async function passwordResetMail(email){
+    try{
+      const response = await api.post("users/password_reset",{
+        email: email
+      })
+      return response;
+    }catch(e){
+      errorHandler(e);
+    }
+}
+
+export async function passwordResetService(payload,key){
+  try{
+    const response = await api.post(`users/password_reset/${key}`,payload);
+    return response;
+  }catch(e){
+    errorHandler(e);
+  }
+}
