@@ -57,7 +57,7 @@ async def logout(payload:dict = Depends(get_user_info),role:str = Depends(user_r
     return response   
 
 @customer_routes.get("/current_user",response_model=dict,status_code=status.HTTP_200_OK)
-async def get_current_user(payload:dict = Depends(get_user_info),role:str = Depends(admin_role_checker.check_role)):
+async def get_current_user(payload:dict = Depends(get_user_info),role:str = Depends(user_role_checker.check_role)):
     return payload 
 
 @customer_routes.post("/delete_user",status_code=status.HTTP_201_CREATED)

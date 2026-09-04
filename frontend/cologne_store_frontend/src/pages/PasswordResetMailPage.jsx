@@ -45,7 +45,7 @@ export function RequestPasswordResetPage(){
           localStorage.removeItem("reset");
           setReset(true);
           timerId = setTimeout(()=>{
-            navigate("/",{replace:true})
+            navigate("/auth",{replace:true})
           },2500)
         }
       }

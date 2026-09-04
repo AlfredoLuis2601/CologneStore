@@ -6,7 +6,17 @@ const PasswordResetContext = createContext(null);
 
 export function UserProvider({children}){
     const [user,setUser] = useState(null);
-    
+    const access_token = localStorage.getItem("access_token");
+    const refresh_token = localStorage.getItem("refresh_token");
+    if(!access_token && !refresh_token) return;
+    try{
+
+      const response = api.get("/current_user");
+      console.log(response.user_information);
+     setUser(response.user_information);
+    }catch(e){
+        setUser(null);
+    }
     return(
         <UserContext.Provider value={{user,setUser}}>
             {children}
@@ -28,9 +38,9 @@ export function PasswordResetProvider({children}){
     const [reset,setReset] = useState(null);
 
     return(
-        <PasswordResetContext value={{reset,setReset}}>
+        <PasswordResetContext.Provider value={{reset,setReset}}>
             {children}
-        </PasswordResetContext>
+        </PasswordResetContext.Provider>
     )
 }
 

@@ -52,10 +52,10 @@ export function LoginPage(){
               title= "Login Page"
               loading = {loading}
               error={error}
-              successMessage={user}          
+              success={user}          
              >
                 <AuthForms
-                  handleClick={handleClick}
+                  func={handleClick}
                   credentials={credentials}
                   setCredentials={setCredentials}
                  />

@@ -4,8 +4,9 @@ import "../layout/Login.css"
 import { useUser } from "../../hooks/context.jsx"
 
 export function Login(){
-    const {user} = useUser();
     //Dependendo do valor de user o component login muda
+    const user = localStorage.getItem("access_token") || null;
+    console.log(user);
     return(
         <>
         {!user && (
