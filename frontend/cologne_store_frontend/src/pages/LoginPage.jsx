@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router"
 import { loginService } from "../services/authService"
 import {jwtDecode} from "jwt-decode"
 import { AuthStructureLayout } from "../components/layout/AuthLayout.jsx"
+import "../components/layout/authLayout.css"
 
 export function LoginPage(){
     let navigate = useNavigate();
@@ -52,7 +53,8 @@ export function LoginPage(){
               title= "Login Page"
               loading = {loading}
               error={error}
-              success={user}          
+              success={user}  
+              message={"Login successful!"}        
              >
                 <AuthForms
                   func={handleClick}

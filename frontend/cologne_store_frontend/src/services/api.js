@@ -14,7 +14,6 @@ export default api;
 //Começar a criar os interceptors para authentication
 
 api.interceptors.request.use((config)=>{
-  console.log(config);
   const token = localStorage.getItem("access_token");
   if(token){
     config.headers.set("Authorization",`Bearer ${token}`);

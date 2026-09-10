@@ -8,6 +8,7 @@ import { AuthLayout } from "./components/layout/AuthLayout.jsx";
 import { RequestPasswordResetPage } from "./pages/PasswordResetMailPage.jsx";
 import { VerifyMailPage } from "./pages/VerifyMailPage.jsx";
 import { PasswordReset } from "./pages/PasswordResetPage.jsx";
+import { CheckoutPage } from "./pages/CheckoutPage.jsx";
 
 function App() {
   return(
@@ -21,6 +22,7 @@ function App() {
         <Route path="requestreset" element={<RequestPasswordResetPage/>}/>
       </Route>
     <Route path="/colognedetails/:uid" element={<CologneDetailsPage/>}/>
+    <Route path="/checkout" element={<CheckoutPage/>}/>
    </Routes>
   );
 }

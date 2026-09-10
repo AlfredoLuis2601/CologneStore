@@ -4,7 +4,7 @@ import { signUpService } from "../services/authService.js";
 import { CircleCheck } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useVerifyMail } from "../hooks/context.jsx";
-
+import { AuthStructureLayout } from "../components/layout/AuthLayout.jsx";
 export function SignUpPage(){
     const [credentials,setCredentials] = useState({
         email:"",

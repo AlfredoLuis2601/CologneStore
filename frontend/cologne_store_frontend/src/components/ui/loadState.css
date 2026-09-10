@@ -1,0 +1,77 @@
+
+@keyframes spinLoader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-box-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+}
+
+.loading-box-sm svg {
+  width: 20px;
+  height: 20px;
+  color: #0e1e17; 
+  animation: spinLoader 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.loading-message-sm {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #707070;
+  line-height: 1;
+}
+
+.loading-box-lg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 280px;
+  padding: 40px 20px;
+}
+
+.loading-box-lg svg {
+  width: 50px;
+  height: 50px;
+  color: #0e1e17;
+  stroke-width: 2.2px;
+  animation: spinLoader 1s linear infinite;
+  flex-shrink: 0;
+}
+
+.loading-message-lg {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #444444;
+}
+
+@media (max-width: 640px) {
+  .loading-box-lg {
+    min-height: 200px;
+    gap: 12px;
+  }
+
+  .loading-box-lg svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .loading-message-lg {
+    font-size: 0.95rem;
+  }
+}

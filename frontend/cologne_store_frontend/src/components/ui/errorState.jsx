@@ -1,4 +1,5 @@
 import {TriangleAlert,Ban,WifiOff,SearchX,ServerCrash, Icon,ShieldAlert} from "lucide-react"
+import "./errorState.css"
 function ErrorUI({code=null,message,variant="DEFAULT",size="md"}){
    const icons = {
      DEFAULT:TriangleAlert,

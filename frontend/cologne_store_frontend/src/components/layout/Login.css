@@ -1,13 +1,79 @@
-.login-header-container{ 
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    background-color: #fff;
-    color: #0f0f0f;
-    border-radius: 12px;
-    width: 6rem;
+/* Container do botão de login (quando deslogado) */
+.login-header-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 50px;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-header-container:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.login-header-container svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.85) !important; 
+  transition: color 0.2s ease;
+}
+
+.login-header-container:hover svg {
+  color: #ffffff !important;
+}
+
+.login-header-text {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  user-select: none;
+}
+
+.user-avatar-image {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: block;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.user-avatar-image:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 960px) {
+ 
+  .login-header-container {
+    padding: 8px;
+    gap: 0;
+  }
+
+  
+  .login-header-text {
+    display: none;
+  }
+
+  .login-user-icon {
+    width: 30px;
+    height: 20px;
+  }
+
+  .user-avatar-image {
+    width: 34px;
+    height: 34px;
+  }
 }

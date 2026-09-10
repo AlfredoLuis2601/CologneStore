@@ -3,14 +3,14 @@ import { getCologneByName } from "../../services/cologneService.js"
 export function SearchBar({searchTerm,setSearchTerm,onSearch}){
   function cologneOnChange(e){
      const name = e.target.value;
-     const cleanName = name.trim();
-     if (!cleanName) return;
-     const urlSafeName = encodeURIComponent(cleanName);
-     setSearchTerm(urlSafeName);
+     setSearchTerm(name);
   }
   function handleDefault(e){
     e.preventDefault();
-    onSearch(searchTerm);
+    const cleanName = searchTerm.trim();
+    if(!cleanName) return ;
+    const cleanNameUrl = encodeURIComponent(cleanName)
+    onSearch(cleanNameUrl);
   }
 
    return(

@@ -4,12 +4,12 @@ import "../layout/Login.css"
 import { useUser } from "../../hooks/context.jsx"
 
 export function Login(){
-    //Dependendo do valor de user o component login muda
-    const user = localStorage.getItem("access_token") || null;
-    console.log(user);
+    const {user} = useUser();
+    const user_info =  user || null;
+   
     return(
         <>
-        {!user && (
+        {!user_info && (
             <Link to={"/auth"} style={{textDecoration: "none", color: "white" }}>
         <div className="login-header-container">
           <CircleUser style={{color:"blue"}}/>
@@ -19,7 +19,7 @@ export function Login(){
         )}
         {user && (
             <img 
-            src={`https://ui-avatars.com/api/?name=${user?.email}&background=random&color=fff`} 
+            src={`https://ui-avatars.com/api/?name=${user?.email}&background=random&color=ffff`} 
             alt="Avatar do usuário" 
             className="user-avatar-image"
            />

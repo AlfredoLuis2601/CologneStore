@@ -1,76 +1,126 @@
 *{
   box-sizing: border-box;
 }
-.cologne-card {
+
+
+.cologne-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,15.625rem);
+  gap: 3.5rem;
   list-style: none;
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 0;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-  height: auto;
-}
-.cologne-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgb(122, 121, 121,1);
+  padding: 40px 48px;
+  margin: 0;
+  max-width: 1360px;
 }
 
-.cologne-img-wrapper {
-  width: 100%;
-  aspect-ratio: 1/1;
+
+.cologne-card {
+  list-style: none;
+  height: 100%;
+}
+
+.cologne-box {
+  background-color: #ffffff;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: rgb(119, 118, 118,0.2);
-   height: 200px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cologne-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.cologne-img-wrapper {
+  background-color: #f3f3f3; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1.05;
+  overflow: hidden;
 }
 
 .cologne-img {
-  width: 100%; 
-   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply; 
+  transition: transform 0.3s ease;
+}
+
+.cologne-box:hover .cologne-img {
+  transform: scale(1.06);
 }
 
 .cologne-info {
+  padding: 16px;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.875rem 1rem;
-  gap: 0.2rem;
-  background-color: #022419;
-  
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  background-color: #ffffff;
+  gap: 12px;
 }
 
 .cologne-titles {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  margin: 0;
-}
-
-.cologne-brand {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #e2e8f0;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  gap: 4px;
 }
 
 .cologne-name {
-  font-size: 0.95rem;
+  margin: 0;
+  font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
-  line-height: 1.2;
+  color: #1a1a1a;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.sales-info {
-  text-align: center;
-  white-space: nowrap; 
+.cologne-brand {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
 .sales-info p {
-  font-size: 1rem;
+  margin: 0;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #059669; 
+  color: #0e1e17; 
 }
 
+@media (max-width: 640px) {
+  .cologne-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 14px;
+    padding: 20px 16px;
+  }
+
+  .cologne-img-wrapper {
+    padding: 16px 12px;
+  }
+
+  .cologne-info {
+    padding: 12px;
+  }
+
+  .cologne-name {
+    font-size: 0.9rem;
+  }
+
+  .sales-info p {
+    font-size: 1rem;
+  }
+}

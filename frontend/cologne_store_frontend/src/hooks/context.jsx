@@ -1,22 +1,33 @@
-import { createContext, useContext, useState } from "react"
-
+import { createContext, useContext, useEffect, useState } from "react"
+import api from "../services/api.js";
 const UserContext = createContext(null);
 const VerifyMailContext = createContext(null);
 const PasswordResetContext = createContext(null);
+const CartContext = createContext(null);
 
 export function UserProvider({children}){
     const [user,setUser] = useState(null);
     const access_token = localStorage.getItem("access_token");
     const refresh_token = localStorage.getItem("refresh_token");
-    if(!access_token && !refresh_token) return;
-    try{
-
-      const response = api.get("/current_user");
-      console.log(response.user_information);
-     setUser(response.user_information);
-    }catch(e){
-        setUser(null);
-    }
+    useEffect(()=>{
+     async function restoreUser(){
+        if(!access_token && !refresh_token) return;
+        try{
+          const response = await api.get("/users/current_user");
+          setUser({
+              email:response.user_information.username,
+              id:response.user_information.user_id,
+              role:response.user_information.role
+            });
+          
+        }catch(e){
+          setUser(null);
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+       }
+     }
+     restoreUser();
+    },[])
     return(
         <UserContext.Provider value={{user,setUser}}>
             {children}
@@ -44,6 +55,24 @@ export function PasswordResetProvider({children}){
     )
 }
 
+export function CartContextProvider({children}){
+    const [cart, setCart] = useState(()=>{
+        const cart = localStorage.getItem("cart");
+        return cart? JSON.parse(cart): [];
+    });
+    useEffect(()=>{
+      localStorage.setItem("cart",JSON.stringify(cart));
+    }, [cart])
+   
+    return(
+        <CartContext.Provider value={{cart, setCart}}>
+            {children}
+        </CartContext.Provider>
+    )
+}
+export function useCart(){
+    return useContext(CartContext);
+}
 export function useUser(){
     return useContext(UserContext);
 }

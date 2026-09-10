@@ -22,5 +22,10 @@ export async function getCologneByName(name){
 }
 
 export async function getCologneById(id){
-
+   try{
+     const response = await api.get(`/${id}`);
+     return response;
+   }catch(e){
+    errorHandler(e);
+   }
 }

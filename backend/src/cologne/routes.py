@@ -28,7 +28,7 @@ role:str = Depends(admin_role_checker.check_role),service:ColognesService = Depe
     new_cologne = await service.add_cologne(raw_cologne_data)
     return new_cologne
 
-@cologne_router.get("/{cologne_name}",response_model=Cologne,status_code=status.HTTP_200_OK)
+@cologne_router.get("/name/{cologne_name}",response_model=Cologne,status_code=status.HTTP_200_OK)
 async def get_cologne(cologne_name:str,user_info = Depends(get_user_info),
 role:str = Depends(user_role_checker.check_role),service:ColognesService = Depends(get_cologne_service),is_verified = Depends(verify_email)):
     
@@ -37,7 +37,11 @@ role:str = Depends(user_role_checker.check_role),service:ColognesService = Depen
         return cologne
     else:
         raise CologneNotFound()
-    
+@cologne_router.get("/{cologne_uid}",response_model=Cologne, status_code= status.HTTP_200_OK)
+async def get_cologne_by_uid(cologne_uid: str, user_info = Depends(get_user_info),
+role: str = Depends(user_role_checker.check_role), service: ColognesService = Depends(get_cologne_service)):
+    cologne = await service.get_cologne_by_id(cologne_uid)
+    return cologne
 @cologne_router.patch("/{cologne_uid}",response_model=CologneClient,status_code=status.HTTP_200_OK)
 async def update_cologne(cologne_uid:UUID,raw_update_data:UpdateCologne,service:ColognesService = Depends(get_cologne_service),user_info = Depends(get_user_info),
 role:str = Depends(admin_role_checker.check_role),is_verified = Depends(verify_email)):

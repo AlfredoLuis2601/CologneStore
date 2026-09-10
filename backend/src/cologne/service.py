@@ -31,7 +31,12 @@ class ColognesService():
         if response:
             return response
         raise DeleteCologne()
-   
+    async def get_cologne_by_id(self, id:str) -> bool:
+        uuid = UUID(id)
+        cologne = await self.repo_instance.get_by_id(uuid)   
+        if cologne is not None:
+            return cologne
+        raise CologneNotFound() 
             
             
             

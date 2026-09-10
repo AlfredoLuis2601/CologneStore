@@ -3,7 +3,6 @@ import "../components/layout/Home.css"
 import { getCologneByName } from "../services/cologneService.js"
 import { useEffect, useState } from "react"
 import { Header } from "../components/layout/Header.jsx"
-import SkeletonCard from "../components/ui/loadingState.jsx"
 import { useNavigate } from "react-router"
 import ErrorUI from "../components/ui/errorState.jsx"
 
@@ -12,6 +11,7 @@ export default function Home(){
     const [error,setError] = useState(null);
     const [cologne,setCologne] = useState('');
     let navigate = useNavigate()
+    
    async function onSearch(term){
       setCologne(term);
       console.log(term);
