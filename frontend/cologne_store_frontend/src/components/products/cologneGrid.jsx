@@ -4,6 +4,7 @@ import ErrorUI from "../ui/errorState.jsx"
 import "./cologneCard.css"
 import { useService } from "../../hooks/useFetch.jsx"
 import { LoadState } from "../ui/loadingState.jsx"
+
 export default function CologneGrid(){
    const {data:colognes,loading,error} = useService(getColognes,null,[])
    if(loading) return <LoadState message={"loading"} size={"lg"}/>

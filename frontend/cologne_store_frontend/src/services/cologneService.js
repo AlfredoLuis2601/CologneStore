@@ -13,7 +13,7 @@ export default getColognes;
 
 export async function getCologneByName(name){
    try{
-    const response = await api.get(`/${name}`);
+    const response = await api.get(`/name/${name}`);
     console.log("Request sent.");
     return response;
    }catch(e){

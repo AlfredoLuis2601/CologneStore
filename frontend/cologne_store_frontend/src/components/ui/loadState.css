@@ -38,8 +38,9 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  width: 100%;
-  min-height: 280px;
+  width: 90vw;
+  height: 80%;           
+  position: fixed;
   padding: 40px 20px;
 }
 

@@ -20,5 +20,3 @@ export function SearchBar({searchTerm,setSearchTerm,onSearch}){
      </form>
    )
 }
-//Passar estado de loading e error para home (lifting up),
-//tudo que é usado por varios components filhos deve ser feito isso

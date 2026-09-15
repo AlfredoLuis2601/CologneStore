@@ -2,15 +2,19 @@ from backend.src.sales.interface import SaleInterface
 from backend.src.shared.generic_repository import GenericSQLModelRepository
 from backend.src.sales.schemas import SaleClient,Sales
 from backend.src.sales.models import SalesDB
-
+from backend.src.auth.schemas import User
 class SalesRepo(GenericSQLModelRepository[Sales,SaleClient,int],SaleInterface):
     def __init__(self, session):
-        super().__init__(session=session, cls_model=SalesDB, cls_schema=SaleClient)
-    async def sale_process(self, sale_obj:dict):
+        super().__init__(session= session, cls_model= SalesDB, cls_schema= Sales)
+        
+    async def sale_process(self, sale_obj: dict):
         sales_update_db = self.cls_model.model_validate(sale_obj)
         self.session.add(sales_update_db)
         await self.session.commit()
         await self.session.refresh(sales_update_db)
-        return True
+        return sales_update_db
     
-    
+    async def get_sales_by_user(self, customer_id):
+        return await super().get_all_by_fields("customer_id",customer_id)  
+        
+

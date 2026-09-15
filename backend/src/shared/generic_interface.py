@@ -20,6 +20,11 @@ class GenericRepoInterface(ABC,Generic[schema,schema_client,id_type]):
     @abstractmethod
     async def get_all(self)->List[schema]:
         pass
-   
+    @abstractmethod
+    async def get_all_by_fields(self, field_name: str, value):
+        pass
+    @abstractmethod
+    async def add_with_payload(self, payload: dict):
+        pass
     
     

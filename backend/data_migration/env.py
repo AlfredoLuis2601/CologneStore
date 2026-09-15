@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from backend.src.cologne.models import CologneInformationDB
 from backend.src.auth.models import CustomersDB
 from backend.src.sales.models import SalesDB
+from backend.src.item.model import ItemDB
 from alembic import context
 from sqlmodel import SQLModel
 from backend.src.config.config_env import DATABASE_URL

@@ -33,7 +33,17 @@ class GenericSQLModelRepository(GenericRepoInterface[schema,schema_client,id_typ
            return True
        else:
            return False
-    
+    async def get_all_by_fields(self, field_name: str, value):
+        query = select(self.cls_model).where(getattr(self.cls_model,field_name) == value)
+        result = await self.session.exec(query)
+        rows = result.all()
+        return [self.cls_schema.model_validate(obj) for obj in rows]
+    async def add_with_payload(self, payload):
+        item = self.cls_model.model_validate(payload)
+        self.session.add(item)
+        await self.session.commit()
+        await self.session.refresh(item)
+        
         
     
     

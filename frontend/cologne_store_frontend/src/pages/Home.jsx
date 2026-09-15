@@ -14,11 +14,9 @@ export default function Home(){
     
    async function onSearch(term){
       setCologne(term);
-      console.log(term);
         try{
           setLoading(true);
           const cologne = await getCologneByName(term);
-          console.log("You clicked the button!");
           navigate(`/colognedetails/${cologne.uid}`)
         }catch(error){
             setError({

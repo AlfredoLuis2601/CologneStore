@@ -1,0 +1,115 @@
+/* Seletor de quantidade com bom espaçamento superior */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #f8fafc;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: fit-content;
+  margin-bottom: 20px; /* Aumenta bem o espaçamento em relação aos botões abaixo */
+}
+
+/* Botões de mais e menos */
+.decrement-button, 
+.increment-button {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.quantity {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Container dos botões empilhados (vertical) */
+.cart-buttons-container {
+  display: flex;
+  flex-direction: column; /* Força o empilhamento vertical */
+  gap: 12px; /* Espaço entre o botão de adicionar e o de ir pro carrinho */
+  align-items: flex-start; /* Alinha à esquerda em vez de esticar */
+  width: 100%;
+}
+
+/* Envolve o Link para que o botão de "Go to cart" respeite o layout */
+.cart-buttons-container a {
+  width: 100%;
+  max-width: 320px; /* Mesma largura máxima para manter o padrão */
+  text-decoration: none;
+}
+
+/* Estilo unificado para ambos os botões ficarem maiores, com altura e largura controladas */
+.cart-button {
+  background-color: #047857; /* Verde esmeralda para o Add to cart */
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  max-width: 320px; /* Trava uma largura máxima elegante, evitando que estique demais */
+  height: 48px; /* Aumenta a altura (height) */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.2);
+}
+
+.cart-button:hover {
+  background-color: #065f46;
+}
+
+/* Seletor específico para o botão "Go to cart" (o segundo botão dentro do container) para ter outra cor */
+.cart-buttons-container a:nth-of-type(1) .cart-button,
+.cart-buttons-container .cart-button + a .cart-button {
+  background-color: #334155; /* Cinza escuro elegante */
+  box-shadow: 0 4px 6px -1px rgba(51, 65, 85, 0.2);
+}
+
+.cart-buttons-container a:nth-of-type(1) .cart-button:hover,
+.cart-buttons-container .cart-button + a .cart-button:hover {
+  background-color: #1e293b;
+}
+
+
+.successfull-auth-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #d1fae5;
+  border: 1px solid #a7f3d0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #065f46;
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+.successfull-auth-text-sm {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.svg-check-sm {
+  width: 16px;
+  height: 16px;
+}
+

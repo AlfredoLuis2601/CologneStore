@@ -1,8 +1,8 @@
 import cologneImg from "../../assets/home/cologne-logo.webp"
 import { Link } from "react-router"
 import "./Header.css"
+
 export function HomeTitle(){
-    //Posteriormente envolver o container com o link para o home
     return(
         <Link to={"/"} style={{textDecoration:"none"}}>
         <div className = "title-container">

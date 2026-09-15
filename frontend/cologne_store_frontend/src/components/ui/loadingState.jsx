@@ -1,5 +1,6 @@
 import { LoaderCircle } from "lucide-react"
 import "./loadState.css"
+
 export function LoadState({message,size}){
   return (
     <div className = {`loading-box-${size}`}>

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { CologneDetails } from "../components/products/cologneDetails.jsx";
 import {CartSection } from "../components/ui/addToCart.jsx";
-import { getCologneById } from "../services/cologneService.js";
-import { HomeTitle } from "../components/layout/Title.jsx";
+import { getCologneById, getCologneByName } from "../services/cologneService.js";
 import { LoadState } from "../components/ui/loadingState.jsx";
+import { Header } from "../components/layout/Header.jsx";
+import { useNavigate } from "react-router";
 
 export function CologneDetailsPage(){
     
@@ -13,6 +14,23 @@ export function CologneDetailsPage(){
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [cologne, setCologne] = useState(null);
+    const [cologneSearch,setCologneSearch] = useState('');
+    localStorage.removeItem("cart");
+    let navigate = useNavigate();
+    
+   async function onSearch(term){
+      setCologneSearch(term);
+        try{
+          const cologneData = await getCologneByName(term);
+          navigate(`/colognedetails/${cologneData.uid}`)
+        }catch(error){
+            setError({
+            code:error?.code,
+            message:error.message,
+            variant:error?.category
+            })
+   }
+  }
     useEffect(()=>{
         console.log(id);
         const loadData = async () =>{
@@ -36,7 +54,7 @@ export function CologneDetailsPage(){
     if(loading) return <LoadState size={"lg"} message={"loading"}/>
     return(
         <>
-          <HomeTitle/>
+          <Header onSearch={onSearch}/>
           {cologne && (
             <CologneDetails cologne={cologne}>
                <CartSection 
