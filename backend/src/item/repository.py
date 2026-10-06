@@ -4,7 +4,7 @@ from .schemas import Item,ItemClient
 from .model import ItemDB
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-class ItemRepository(GenericSQLModelRepository[Item,ItemClient], ItemRepoInterface):
+class ItemRepository(GenericSQLModelRepository[Item,ItemClient, int], ItemRepoInterface):
     def __init__(self, session: AsyncSession):
         super().__init__(session=session, cls_schema=Item, cls_model=ItemDB)
     
