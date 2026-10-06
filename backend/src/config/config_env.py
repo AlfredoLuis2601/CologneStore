@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 from pathlib import Path
 from pydantic_settings import SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
 class Settings(BaseSettings):
     STANDARD_EXPIRE_JWT_TIME:int = 2
     STANDARD_TOKEN_EXPIRE_TIME:int = 30

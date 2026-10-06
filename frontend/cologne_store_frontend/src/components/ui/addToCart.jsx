@@ -34,7 +34,8 @@ export function CartSection({cologne}){
          amount: quantity,
          price: cologne.price,
          name: cologne.name,
-         img: cologne.image_url
+         img: cologne.image_url,
+         delivery: "standard"
        }]
      })
      setSuccess(true);

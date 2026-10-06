@@ -11,7 +11,6 @@ const api = axios.create({
 export default api;
 
 
-//Começar a criar os interceptors para authentication
 
 api.interceptors.request.use((config)=>{
   const token = localStorage.getItem("access_token");
@@ -29,7 +28,14 @@ api.interceptors.response.use(
 },
  async (error)=>{
   const originalRequest = error.config;
-  if(error.response.data?.detail==="RefreshTokenToAccess" && !originalRequest._retry){
+  if (originalRequest.url.includes("/refresh_token")) { 
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token")
+            delete api.defaults.headers.common["Authorization"];
+            window.location.replace("/auth");
+            return Promise.reject(error);
+        }
+  if(error.response?.status === 401 && !originalRequest._retry){
      originalRequest._retry = true;
   
   try{
@@ -37,13 +43,13 @@ api.interceptors.response.use(
     originalRequest.headers.set("Authorization",`Bearer ${token}`);
     return api(originalRequest);
   }catch(InvalidToken){
-     //Redirecionar para a janela de login e limpar token invalido 
      localStorage.removeItem("access_token");
+     localStorage.removeItem("refresh_token");
       delete api.defaults.headers.common["Authorization"]
-     window.location.replace("/login");
-     return Promise.reject(InvalidToken); //Interrompe o programa original para realocar para login
+     window.location.replace("/auth");
+     return Promise.reject(InvalidToken); 
   }
 }
-  return Promise.reject(error); //Lança erro qualquer para minha service
+  return Promise.reject(error); 
  }
 );

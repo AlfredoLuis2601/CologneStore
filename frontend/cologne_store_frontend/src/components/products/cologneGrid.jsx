@@ -7,7 +7,7 @@ import { LoadState } from "../ui/loadingState.jsx"
 
 export default function CologneGrid(){
    const {data:colognes,loading,error} = useService(getColognes,null,[])
-   if(loading) return <LoadState message={"loading"} size={"lg"}/>
+   if(loading) return <LoadState message={"Loading..."} size={"lg"}/>
    if(error) return <ErrorUI code={error.code} message={error.message} variant={error.variant} size="lg"/>
    return(
     <ul className="cologne-grid">

@@ -17,7 +17,7 @@ export function CologneDetails({ cologne, children }) {
 
               <div className="cologne-details-info">
                 <p className="cologne-details-info-price">{priceCurrency(cologne.price)}</p>
-                <p className="cologne-details-info-amount">Available stock: {cologne.amount}</p>
+                <p className="cologne-details-info-amount">Available stock : {cologne.amount}</p>
                 
                 {cologne.amount === 0 && (
                   <div className="cologne-unavailable">

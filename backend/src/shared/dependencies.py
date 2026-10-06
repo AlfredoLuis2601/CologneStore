@@ -4,8 +4,10 @@ from backend.src.sales.repository import SalesRepo
 from backend.src.cologne.service import ColognesService
 from backend.src.auth.service import AuthService
 from backend.src.sales.service import OrderService
+from backend.src.item.repository import ItemRepository
 from sqlmodel.ext.asyncio.session import AsyncSession
 from backend.src.config.database import get_session
+
 from fastapi import Depends
 
 
@@ -18,7 +20,8 @@ def get_order_service(session:AsyncSession = Depends(get_session))->OrderService
     sales_repo = SalesRepo(session)
     auth_repo = AuthRepo(session)
     cologne_repo = CologneRepo(session)
-    service = OrderService(auth_repo,cologne_repo,sales_repo)
+    item_repo = ItemRepository(session)
+    service = OrderService(auth_repo,cologne_repo,sales_repo,item_repo)
     return service
 
 def get_auth_service(session:AsyncSession = Depends(get_session))->AuthService:

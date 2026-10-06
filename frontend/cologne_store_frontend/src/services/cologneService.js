@@ -29,3 +29,12 @@ export async function getCologneById(id){
     errorHandler(e);
    }
 }
+
+export async function createOrder(saleData) {
+  try{
+  const response = await api.post("/sales/order",saleData);
+  return response;
+  }catch(e){
+    errorHandler(e);
+  }
+}

@@ -1,0 +1,155 @@
+.checkout-page-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+}
+
+.checkout-content {
+  max-width: 1250px; /* Leve expansão para acomodar os elementos maiores */
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+}
+
+.checkout-content-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 3rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #e2e8f0;
+
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px; /* Coluna do resumo um pouco mais larga */
+  gap: 3.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.checkout-summary-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 2.5rem; /* Padding interno maior para preencher bem o card */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 2rem;
+}
+
+.checkout-summary-info {
+  font-size: 1.05rem; /* Textos gerais maiores */
+  color: #475569;
+}
+
+.checkout-summary-box p.checkout-summary-info:first-child {
+  font-size: 1.3rem; /* Título "Order Summary" maior */
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.1rem; /* Mais respiro entre as linhas de subtotal/frete */
+}
+
+.summary-row.total {
+  font-size: 1.25rem; /* Total destacado com fonte maior */
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.finalize-payment-button {
+  width: 100%;
+  background-color: #0f172a;
+  color: white;
+  border: none;
+  padding: 1.15rem; /* Botão de pagamento mais alto e imponente */
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 2rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.finalize-payment-button:hover {
+  background-color: #1e293b;
+  transform: translateY(-1px);
+}
+
+.finalize-payment-button:active {
+  transform: translateY(0);
+}
+
+.finalize-payment-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.success-icon {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.empty-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 18px;
+  padding: 5rem 2rem;
+  text-align: center;
+  gap: 1.25rem;
+  color: #64748b;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.empty-cart-icon {
+  color: #94a3b8;
+}
+
+.empty-cart-container p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #475569;
+  margin: 0;
+}

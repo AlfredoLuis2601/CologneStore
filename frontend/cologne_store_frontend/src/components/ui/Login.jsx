@@ -19,7 +19,7 @@ export function Login(){
         )}
         {user && (
             <img 
-            src={`https://ui-avatars.com/api/?name=${user?.email}&background=random&color=ffff`} 
+            src={`https://ui-avatars.com/api/?name=${user?.email}&background=random&color=0f0f0f`} 
             alt="Avatar do usuário" 
             className="user-avatar-image"
            />

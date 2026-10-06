@@ -1,44 +1,21 @@
 import CologneGrid from "../components/products/cologneGrid.jsx"
 import "../components/layout/Home.css"
-import { getCologneByName } from "../services/cologneService.js"
-import { useEffect, useState } from "react"
 import { Header } from "../components/layout/Header.jsx"
-import { useNavigate } from "react-router"
 import ErrorUI from "../components/ui/errorState.jsx"
+import { useCologneSearch } from "../hooks/useCologneSearch.jsx"
 
 export default function Home(){
-    const [loading,setLoading] = useState(false);
-    const [error,setError] = useState(null);
-    const [cologne,setCologne] = useState('');
-    let navigate = useNavigate()
-    
-   async function onSearch(term){
-      setCologne(term);
-        try{
-          setLoading(true);
-          const cologne = await getCologneByName(term);
-          navigate(`/colognedetails/${cologne.uid}`)
-        }catch(error){
-            setError({
-            code:error?.code,
-            message:error.message,
-            variant:error?.category
-            })
-        }finally{
-            setLoading(false);
-        }
-   }
+    const {searchError} = useCologneSearch();
     return (
        <main className="home-container">
-          <Header 
-            onSearch={onSearch}
-          />
+          <Header/>
           <section className = "home-box">
-            {error && 
+            {searchError && 
            (<ErrorUI 
-              code={error.code} 
-              message={error.message} 
-              variant={error.variant}
+              code={searchError.code} 
+              message={searchError.message} 
+              variant={searchError.variant}
+              size="sm"
             />
           )}
           <CologneGrid/>

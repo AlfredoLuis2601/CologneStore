@@ -36,7 +36,7 @@ class OrderService():
             sales = await self.sales_repo_instance.sale_process(sales_information)
             for item in items:
                item_info = item.model_dump()
-               item_info["sales_id"] = sales.sales_id
+               item_info["sales_id"] = sales.sales_id               
                await self.item_repo_instance.add_item(item_info)             
                await self.cologne_repo_instance.update_inventory(item.uid,item.amount)
             return True

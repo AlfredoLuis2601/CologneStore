@@ -6,9 +6,11 @@ const PasswordResetContext = createContext(null);
 const CartContext = createContext(null);
 
 export function UserProvider({children}){
+
     const [user,setUser] = useState(null);
     const access_token = localStorage.getItem("access_token");
     const refresh_token = localStorage.getItem("refresh_token");
+
     useEffect(()=>{
      async function restoreUser(){
         if(!access_token && !refresh_token) return;
@@ -28,6 +30,7 @@ export function UserProvider({children}){
      }
      restoreUser();
     },[])
+    
     return(
         <UserContext.Provider value={{user,setUser}}>
             {children}
@@ -63,9 +66,21 @@ export function CartContextProvider({children}){
     useEffect(()=>{
       localStorage.setItem("cart",JSON.stringify(cart));
     }, [cart])
-   
+   const updateItemDelivery = (id, newDeliveryType) =>{
+     setCart(prevCart => prevCart.map(item =>
+        item.id === id? {...item, delivery: newDeliveryType} : item
+     )
+    );
+   }
+   const removeItem = (id) => {
+    setCart(prevCart => prevCart.filter(item => item.id != id));
+   }
+   const clearCart = () => {
+  localStorage.removeItem("cart"); 
+  setCart([]); 
+};
     return(
-        <CartContext.Provider value={{cart, setCart}}>
+        <CartContext.Provider value={{cart, setCart,updateItemDelivery,clearCart,removeItem}}>
             {children}
         </CartContext.Provider>
     )

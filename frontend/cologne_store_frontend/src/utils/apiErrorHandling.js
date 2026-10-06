@@ -4,7 +4,6 @@ export function errorHandler(e){
    if(e.response){
       const status = e.response.status;
       const detail = e.response.data
-      console.log(e.response);
       switch(status){
         case 400:{
             if(detail.error_code === "DifferentPasswords"){

@@ -1,10 +1,7 @@
 import { Search } from "lucide-react"
-import { getCologneByName } from "../../services/cologneService.js"
+
 export function SearchBar({searchTerm,setSearchTerm,onSearch}){
-  function cologneOnChange(e){
-     const name = e.target.value;
-     setSearchTerm(name);
-  }
+  
   function handleDefault(e){
     e.preventDefault();
     const cleanName = searchTerm.trim();
@@ -15,7 +12,7 @@ export function SearchBar({searchTerm,setSearchTerm,onSearch}){
 
    return(
      <form className="search-box" onSubmit={handleDefault}>
-       <input className="search-input"type="text" placeholder="Search:" value={searchTerm} onChange={cologneOnChange}/>
+       <input className="search-input"type="text" placeholder="Search:" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
        <button className="search-button"type="submit"><Search/></button>
      </form>
    )
