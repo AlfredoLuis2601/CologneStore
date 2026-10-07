@@ -47,7 +47,7 @@ async def verify_account(token:str,service:AuthService = Depends(get_auth_servic
     )
     
 @customer_routes.post("/refresh_token",response_model=dict,status_code=status.HTTP_201_CREATED)
-async def new_access_token(token_data:dict = Depends(verify_refresh_token),check_role:str = Depends(admin_role_checker.check_role),service:AuthService = Depends(get_auth_service)):
+async def new_access_token(token_data:dict = Depends(verify_refresh_token),service:AuthService = Depends(get_auth_service)):
     token_response = await service.new_access_token(token_data)
     return token_response
 

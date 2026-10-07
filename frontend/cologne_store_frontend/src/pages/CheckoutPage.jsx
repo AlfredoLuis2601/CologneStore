@@ -11,13 +11,15 @@ import { useNavigate } from "react-router";
 import "../components/layout/checkoutPage.css";
 
 export function CheckoutPage() {
+  localStorage.removeItem("access_token")
+  localStorage.removeItem("refresh_token");
   const { cart, clearCart } = useCart(); 
   const { searchError } = useCologneSearch();
   const navigate = useNavigate();
   const {user} = useUser();
   const [loadingCheckout, setLoadingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState(null);
-  
+  console.log(user);
   const [successMessage, setSuccessMessage] = useState(false);
 
   const calculateTotals = () => {
@@ -67,9 +69,7 @@ export function CheckoutPage() {
       setSuccessMessage(true);
       clearCart();
 
-      setTimeout(() => {
-        navigate("/orders");
-      }, 2500);
+     
 
     } catch (err) {
       setCheckoutError({

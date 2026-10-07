@@ -2,8 +2,9 @@ import api from "./api.js"
 import { errorHandler } from "../utils/apiErrorHandling.js"
 
 export async function getNewAccessToken(){
-    try{
+    try{   
       const token = await api.post("/users/refresh_token");
+      localStorage.setItem("access_token", token)
       return token;
     }catch(e){
         errorHandler(e);
@@ -27,8 +28,7 @@ export async function loginService(payload){
 }
 
 export async function signUpService(payload){
-   //Pagina do signUp depois de voce verificar o email, navigate 
-   // para login
+
    try{
      const response = await api.post("/users/sign_up",{
         email:payload.email,
