@@ -6,7 +6,7 @@ from backend.src.config.error_handling import EmptyInventory
 from backend.src.cologne.schemas import Cologne
 from backend.src.sales.schemas import SaleClient
 from backend.src.config.error_handling import UserNotFound,CologneNotFound
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 from backend.src.item.schemas import ItemClient
 class OrderService():
@@ -31,12 +31,13 @@ class OrderService():
         user_info = await self.user_repo_instance.get_by_email(raw_sale_data.email)
         if user_info is not None:
             sales_information = {
-             "customer_id":user_info.customer_id,"total_price":total_price,"sale_date": datetime.now()
+             "customer_id":user_info.customer_id,"total_price":total_price,"sale_date": datetime.now(timezone.utc).replace(tzinfo=None)
             }
             sales = await self.sales_repo_instance.sale_process(sales_information)
             for item in items:
+               item.delivery_date = item.delivery_date.replace(tzinfo=None)
                item_info = item.model_dump()
-               item_info["sales_id"] = sales.sales_id               
+               item_info["sales_id"] = sales.sales_id              
                await self.item_repo_instance.add_item(item_info)             
                await self.cologne_repo_instance.update_inventory(item.uid,item.amount)
             return True

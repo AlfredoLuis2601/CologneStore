@@ -7,7 +7,7 @@ from backend.src.auth.user_dependencies import get_user_info,RoleChecker
 from backend.src.sales.schemas import SaleClient
 from fastapi.responses import JSONResponse
 
-user_role_checker = RoleChecker(["User"])
+user_role_checker = RoleChecker(["User", "admin"])
 sales_router = APIRouter()
 
 @sales_router.post("/order",response_model=Dict,status_code=status.HTTP_201_CREATED)
