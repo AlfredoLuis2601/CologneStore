@@ -9,7 +9,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from backend.src.shared.dependencies import get_auth_service
 from backend.src.auth.service import AuthService
 from pydantic import EmailStr
-
+import logging
 customer_routes = APIRouter()
 user_role_checker = RoleChecker(["User","admin"])
 admin_role_checker = RoleChecker(["admin"])
@@ -47,8 +47,8 @@ async def verify_account(token:str,service:AuthService = Depends(get_auth_servic
     )
     
 @customer_routes.post("/refresh_token",response_model=dict,status_code=status.HTTP_201_CREATED)
-async def new_access_token(token_data:dict = Depends(verify_refresh_token),service:AuthService = Depends(get_auth_service)):
-    token_response = await service.new_access_token(token_data)
+async def new_access_token(token: str, service:AuthService = Depends(get_auth_service)):
+    token_response = await service.new_access_token(token)
     return token_response
 
 @customer_routes.post("/logout",response_model=dict,status_code=status.HTTP_200_OK)

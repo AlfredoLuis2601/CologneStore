@@ -6,6 +6,8 @@ from datetime import datetime,timedelta,timezone
 from backend.src.config.config_env import jwt_key,jwt_algorithm,default_time_delta
 import logging
 import uuid
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 password_context = CryptContext(
     schemes=["argon2"]
 )
@@ -25,6 +27,7 @@ def generate_JWT(user_data:dict,expiration_time:timedelta = None,is_refresh:bool
        expiry= datetime.now(timezone.utc) + time 
    else:
        expiry = datetime.now(timezone.utc) + expiration_time
+   logger.info(f" Tipo Refresh: {is_refresh} | Criado em: {datetime.now} | Expira em: {expiry} | Duração configurada: {default_time_delta}")
    payload = {
        "user_information":user_data,
        "exp":expiry, 
@@ -36,7 +39,7 @@ def generate_JWT(user_data:dict,expiration_time:timedelta = None,is_refresh:bool
        key=jwt_key,
        algorithm=jwt_algorithm
    )
-   
+   logger.info(token)
    return token 
 
 def decode_JWT(token:str):

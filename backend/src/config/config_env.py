@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 class Settings(BaseSettings):
     STANDARD_EXPIRE_JWT_TIME:int = 2
     STANDARD_TOKEN_EXPIRE_TIME:int = 30
-    DEFAULT_TIMEDELTA:int = 3600
+    DEFAULT_TIMEDELTA:int = 60
     DATABASE_URL:str
     JWT_KEY:str
     JWT_ALGORITHM:str

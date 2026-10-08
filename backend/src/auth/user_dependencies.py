@@ -7,8 +7,11 @@ from backend.src.auth.models import CustomersDB
 from fastapi import status, Depends
 from backend.src.config.redis_config import token_block_list
 from typing import List
+import logging
 from backend.src.config.error_handling import TokenAlreadyInBlackList,InvalidToken,RefreshTokenToAccess,RolePermission,GenerateRefresh,EmailNotVerified
 token_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/cologne_store/users/sign_in_swagger") 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 async def get_user_info(token:str = Depends(token_bearer)):
     token_data:dict = decode_JWT(token)
     if token_data is None:
@@ -24,13 +27,17 @@ def get_token_payload(token:str):
     token_data = decode_JWT(token)
     if token_data is None:
         raise InvalidToken()
-def verify_refresh_token(token:str = Depends(token_bearer)):
+    
+def verify_refresh_token(token:str):
+    logger.warning(token)
     token_data = decode_JWT(token)
     if token_data is None:
-        raise InvalidToken()
+        logger.warning("[JWT VERIFY] Token failed (None)")
+        raise InvalidToken() 
     elif token_data is not None and not token_data["refresh"]:
         raise GenerateRefresh()
     return token_data
+
 class RoleChecker():   
   def __init__(self,roles:List[str]):
     self.roles = roles

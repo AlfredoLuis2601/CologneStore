@@ -28,12 +28,34 @@ api.interceptors.request.use((config)=>{
 });
 
 api.interceptors.response.use(
-    (response) => {
-        return response.data;
-    },
-    (error) => {
-        // Se der 401, vamos apenas rejeitar o erro SEM apagar o localStorage por enquanto
-        // para sabermos exatamente quem está gerando a falha.
-        return Promise.reject(error);
-    }
+    (response)=>{
+    return response.data;
+},
+ async (error)=>{
+  const originalRequest = error.config;
+  if (originalRequest.url.includes("/refresh_token")) { 
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token")
+            delete api.defaults.headers.common["Authorization"];
+            window.location.replace("/auth");
+            return Promise.reject(error);
+        }
+  if(error.response?.status === 401 && !originalRequest._retry){
+     originalRequest._retry = true;
+  
+  try{
+    const refresh_token = localStorage.getItem("refresh_token");
+    const token = await getNewAccessToken(refresh_token);
+    originalRequest.headers.Authorization = `Bearer ${token}`;
+    return api(originalRequest);
+  }catch(InvalidToken){
+     localStorage.removeItem("access_token");
+     localStorage.removeItem("refresh_token");
+      delete api.defaults.headers.common["Authorization"]
+      window.location.replace("/auth");
+     return Promise.reject(InvalidToken); 
+  }
+}
+  return Promise.reject(error); 
+ }
 );

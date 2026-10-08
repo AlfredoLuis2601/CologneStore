@@ -11,8 +11,7 @@ import { useNavigate } from "react-router";
 import "../components/layout/checkoutPage.css";
 
 export function CheckoutPage() {
-  localStorage.removeItem("access_token")
-  localStorage.removeItem("refresh_token");
+
   const { cart, clearCart } = useCart(); 
   const { searchError } = useCologneSearch();
   const navigate = useNavigate();

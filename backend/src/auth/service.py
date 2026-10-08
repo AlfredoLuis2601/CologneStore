@@ -12,7 +12,7 @@ from backend.src.auth.utils_security import get_hash,get_password,generate_JWT
 from uuid import UUID
 from backend.src.auth.schemas import PasswordReset
 from backend.src.config.error_handling import UserAlreadyExist,EmailTokenExpired,UserAlreadyVerified,UserNotFound,WrongPassword,InvalidToken
-
+from backend.src.auth.user_dependencies import verify_refresh_token
 
 class AuthService():
     def __init__(self,user_repo_instance:UserRepoInterface):
@@ -85,7 +85,8 @@ class AuthService():
        response = await self.user_repo_instance.delete(id)
        if not response:
           raise UserNotFound()
-    async def new_access_token(self,token_data:dict)->dict:
+    async def new_access_token(self,token: str)->dict:
+       token_data = verify_refresh_token(token)
        user_info = token_data.get("user_information")
        username = user_info.get("username")
        user_id = user_info.get("user_id")

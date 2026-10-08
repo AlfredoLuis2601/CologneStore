@@ -1,9 +1,9 @@
 import api from "./api.js"
 import { errorHandler } from "../utils/apiErrorHandling.js"
 
-export async function getNewAccessToken(){
+export async function getNewAccessToken(refresh_token){
     try{   
-      const token = await api.post("/users/refresh_token");
+      const token = await api.post("/users/refresh_token", refresh_token);
       localStorage.setItem("access_token", token)
       return token;
     }catch(e){
