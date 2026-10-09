@@ -7,7 +7,6 @@ from backend.src.sales.service import OrderService
 from backend.src.item.repository import ItemRepository
 from sqlmodel.ext.asyncio.session import AsyncSession
 from backend.src.config.database import get_session
-
 from fastapi import Depends
 
 

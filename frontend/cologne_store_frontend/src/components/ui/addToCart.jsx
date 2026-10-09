@@ -39,6 +39,9 @@ export function CartSection({cologne}){
        }]
      })
      setSuccess(true);
+     setTimeout(()=>{
+        setSuccess(false);
+     },2000)
     }catch(e){
       setError({
         code:e?.code,

@@ -14,4 +14,3 @@ class SalesDB(SQLModel,table=True):
     
 
 
-#Create new table and make the data migration on SalesDB

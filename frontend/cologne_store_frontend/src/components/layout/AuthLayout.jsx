@@ -5,7 +5,7 @@ import ErrorUI from "../ui/errorState.jsx";
 import { LoadState } from "../ui/loadingState.jsx";
 import "./authLayout.css"
 export function AuthLayout(){
-    //Essa div vai ser a borda padrao para todas as auth pages
+
     return(
         <main className="auth-wrapper">
           <header className="auth-header">

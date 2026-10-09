@@ -15,8 +15,10 @@ from backend.src.config.error_handling import UserAlreadyExist,EmailTokenExpired
 from backend.src.auth.user_dependencies import verify_refresh_token
 
 class AuthService():
+   
     def __init__(self,user_repo_instance:UserRepoInterface):
        self.user_repo_instance = user_repo_instance
+       
     async def sign_up(self,raw_user_info:UserClient)->CustomersDB:
        already_exist = await self.user_repo_instance.get_by_email(raw_user_info.email)
        if already_exist is None:
@@ -26,6 +28,7 @@ class AuthService():
           return response
        else:
           raise UserAlreadyExist()
+       
     async def verify_account_email(self,user:CustomersDB)->bool:
        token = uuid.uuid4()
        expiry_token_time = timedelta(minutes=standard_token_time) + datetime.now(timezone.utc).replace(tzinfo=None)
@@ -38,7 +41,8 @@ class AuthService():
           """
        email_task_queue.delay(subject,user.email,body)
        return True
-    async def verify_account(self,key:str)->bool:
+    
+    async def verify_account(self,key:str)->bool:      
        time_now = datetime.now(timezone.utc).replace(tzinfo=None) 
        try:
         key_uuid = UUID(key)
@@ -51,6 +55,7 @@ class AuthService():
           raise EmailTokenExpired()
        await self.user_repo_instance.activate_user(user)
        return True
+    
     async def sign_in(self,raw_user_info:UserClient)->dict:
        user = await self.user_repo_instance.get_by_email(raw_user_info.email)
        if user is None:
@@ -78,13 +83,16 @@ class AuthService():
                }
        else:
          raise WrongPassword() 
+      
     async def get_users(self)->List[User]:
        users = await self.user_repo_instance.get_all()
        return users
+    
     async def delete_user(self,id:int):
        response = await self.user_repo_instance.delete(id)
        if not response:
           raise UserNotFound()
+       
     async def new_access_token(self,token: str)->dict:
        token_data = verify_refresh_token(token)
        user_info = token_data.get("user_information")
@@ -96,6 +104,7 @@ class AuthService():
         "access_token":refresh_acess_token,
         "token_type":"bearer"
        }
+       
     async def add_token_to_block_list(self,token_data:dict)->dict:
         exp = token_data.get("exp")
         jti = token_data.get("jti")
@@ -106,6 +115,7 @@ class AuthService():
            "status_code":200,
            "content":"Logout has been succesfully done!"
         }
+        
     async def password_reset_email(self,email:EmailStr)->bool:
        user = await self.user_repo_instance.get_by_email(email)
        if user is None:
@@ -121,6 +131,7 @@ class AuthService():
        """
        subject = "Password reset"
        email_task_queue.delay(subject,email,body)
+       
     async def password_reset(self,password_info:PasswordReset,key:str)->bool:
        if password_info.confirm_new_password!=password_info.new_password:
           raise WrongPassword()
@@ -128,11 +139,12 @@ class AuthService():
        time_now = datetime.now(timezone.utc).replace(tzinfo=None)
        if user is None:
           raise UserAlreadyVerified()   
-       elif time_now> user.expiry_reset_token_time:
+       elif time_now > user.expiry_reset_token_time:
           raise EmailTokenExpired()
        hash_password = get_hash(password_info.new_password)
        await self.user_repo_instance.save_password(user,hash_password)
        return True
+    
     async def resend_email(self, key:str) -> None:
        time_now = datetime.now(timezone.utc).replace(tzinfo=None)
        try:

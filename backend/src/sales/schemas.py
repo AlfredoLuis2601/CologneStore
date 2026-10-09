@@ -15,4 +15,6 @@ class Sales(BaseModel):
     customer_id:int
     total_price:float 
     sale_date:datetime
-    
+    model_config ={
+        "from_attributes":True
+    }

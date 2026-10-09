@@ -121,7 +121,7 @@ export function CheckoutPage() {
               </div>
 
               <button 
-                className="finalize-payment-button" 
+                className="finish-payment-button" 
                 onClick={handleCheckout}
                 disabled={loadingCheckout}
               >

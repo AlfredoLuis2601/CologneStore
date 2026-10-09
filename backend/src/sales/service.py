@@ -4,11 +4,12 @@ from backend.src.sales.interface import SaleInterface
 from backend.src.item.interface import ItemRepoInterface
 from backend.src.config.error_handling import EmptyInventory
 from backend.src.cologne.schemas import Cologne
-from backend.src.sales.schemas import SaleClient
-from backend.src.config.error_handling import UserNotFound,CologneNotFound
+from backend.src.sales.schemas import SaleClient,Sales
+from backend.src.config.error_handling import UserNotFound,CologneNotFound,InvalidToken
 from datetime import datetime, timezone
 from typing import List
-from backend.src.item.schemas import ItemClient
+from backend.src.item.schemas import ItemClient, Item
+
 class OrderService():
     
     def __init__(self, user_repo_instance: UserRepoInterface, cologne_repo_instance: CologneRepoInterface, sales_repo_instance: SaleInterface, item_repo_instance: ItemRepoInterface):
@@ -43,4 +44,19 @@ class OrderService():
             return True
         else:
               raise UserNotFound()
+    
+    async def get_items(self, token_data: dict) -> List[List[Item]]:
+        payload = token_data.get("user_information", None)
+        user_id = int(payload.get("user_id"))
+        if not user_id:
+            raise InvalidToken()
+        all_items: List[List[Item]] = []
+        sales: List[Sales] = await self.sales_repo_instance.get_sales_by_user(user_id)
+        for sale in sales:
+            items = await self.item_repo_instance.get_items_by_sale(sale.sales_id)
+            all_items.append(items)
+        return all_items
+        
+        
+        
           
