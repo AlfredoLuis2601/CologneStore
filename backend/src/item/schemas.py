@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
-
+from typing import Optional
 class ItemClient(BaseModel):
     uid:uuid.UUID
     amount: int
@@ -12,4 +12,7 @@ class ItemClient(BaseModel):
 class Item(ItemClient):
     item_id: uuid.UUID
     sales_id: int
-    
+
+class ItemOrder(Item):
+    img: str
+    name: str

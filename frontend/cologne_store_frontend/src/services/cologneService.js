@@ -14,7 +14,6 @@ export default getColognes;
 export async function getCologneByName(name){
    try{
     const response = await api.get(`/name/${name}`);
-    console.log("Request sent.");
     return response;
    }catch(e){
     errorHandler(e);
@@ -34,6 +33,16 @@ export async function createOrder(saleData) {
   try{
   const response = await api.post("/sales/order",saleData);
   return response;
+  }catch(e){
+    errorHandler(e);
+  }
+}
+
+export async function getOrders(){
+
+  try{
+    const response = await api.get("/sales/order");
+    return response
   }catch(e){
     errorHandler(e);
   }

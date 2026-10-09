@@ -17,7 +17,6 @@ export function useService(serviceFn,params=null,dataType){
           error.category = "NOT_FOUND";
           throw error;
         }
-          console.log("Response has been succesfully returned!");
           setData(data);
         }catch(error){
             setError({

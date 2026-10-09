@@ -10,6 +10,5 @@ class ItemRepoInterface(GenericRepoInterface[Item,ItemClient, int]):
     @abstractmethod
     async def add_item(self, item_info: dict):
         pass
-
     
     

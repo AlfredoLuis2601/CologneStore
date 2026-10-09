@@ -8,7 +8,7 @@ from backend.src.sales.schemas import SaleClient,Sales
 from backend.src.config.error_handling import UserNotFound,CologneNotFound,InvalidToken
 from datetime import datetime, timezone
 from typing import List
-from backend.src.item.schemas import ItemClient, Item
+from backend.src.item.schemas import ItemClient, Item,ItemOrder
 
 class OrderService():
     
@@ -45,16 +45,22 @@ class OrderService():
         else:
               raise UserNotFound()
     
-    async def get_items(self, token_data: dict) -> List[List[Item]]:
+    async def get_items(self, token_data: dict) -> List[List[ItemOrder]]:
         payload = token_data.get("user_information", None)
         user_id = int(payload.get("user_id"))
         if not user_id:
             raise InvalidToken()
-        all_items: List[List[Item]] = []
+        all_items: List[List[ItemOrder]] = []
         sales: List[Sales] = await self.sales_repo_instance.get_sales_by_user(user_id)
         for sale in sales:
             items = await self.item_repo_instance.get_items_by_sale(sale.sales_id)
-            all_items.append(items)
+            items_with_img: List[ItemOrder] = []
+            for item in items:
+                cologne = await self.cologne_repo_instance.get_by_id(item.uid)
+                order_item_dict = {**item.model_dump(),"img":cologne.image_url,"name": cologne.name}
+                order_item = ItemOrder.model_validate(order_item_dict)
+                items_with_img.append(order_item)
+            all_items.append(items_with_img)    
         return all_items
         
         
