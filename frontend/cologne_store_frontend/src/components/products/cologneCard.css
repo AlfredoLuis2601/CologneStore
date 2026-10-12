@@ -9,8 +9,8 @@
   gap: 3.5rem;
   list-style: none;
   padding: 40px 48px;
-  margin: 0;
-  max-width: 1360px;
+  margin-left: 50px;
+ 
 }
 
 
@@ -44,7 +44,8 @@
   justify-content: center;
   aspect-ratio: 1 / 1.05;
   overflow: hidden;
-  height: 320px;
+  padding: 20px;
+  height: 300px;
   width: 270px;
 }
 
@@ -105,26 +106,3 @@
   
 }
 
-@media (max-width: 640px) {
-  .cologne-grid {
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 14px;
-    padding: 20px 16px;
-  }
-
-  .cologne-img-wrapper {
-    padding: 16px 12px;
-  }
-
-  .cologne-info {
-    padding: 12px;
-  }
-
-  .cologne-name {
-    font-size: 0.9rem;
-  }
-
-  .sales-info p {
-    font-size: 1rem;
-  }
-}

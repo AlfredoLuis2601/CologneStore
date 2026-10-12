@@ -1,6 +1,6 @@
 import api from "./api.js"
 import { errorHandler } from "../utils/apiErrorHandling.js"
-
+import { useUser } from "../hooks/context.jsx";
 export async function getNewAccessToken(refresh_token){
     try{   
       const token = await api.post("/users/refresh_token", refresh_token);
@@ -81,4 +81,17 @@ export async function passwordResetService(payload,key){
   }catch(e){
     errorHandler(e);
   }
+}
+
+export async function logout(){
+   try{
+     const response = await api.post("/logout");
+     localStorage.removeItem("access_token");
+     localStorage.removeItem("refresh_token");
+     const {clearUser} = useUser();
+     clearUser();
+     return response;
+   }catch(e){
+     errorHandler(e);     
+   }
 }

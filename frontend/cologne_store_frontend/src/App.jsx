@@ -9,6 +9,7 @@ import { RequestPasswordResetPage } from "./pages/PasswordResetMailPage.jsx";
 import { VerifyMailPage } from "./pages/VerifyMailPage.jsx";
 import { PasswordReset } from "./pages/PasswordResetPage.jsx";
 import { CheckoutPage } from "./pages/CheckoutPage.jsx";
+import { Orders } from "./pages/Orders.jsx";
 
 function App() {
   return(
@@ -23,6 +24,7 @@ function App() {
       </Route>
     <Route path="/colognedetails/:uid" element={<CologneDetailsPage/>}/>
     <Route path="/checkout" element={<CheckoutPage/>}/>
+    <Route path="/orders" element={<Orders/>}/>
    </Routes>
   );
 }

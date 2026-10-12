@@ -29,10 +29,14 @@ export function UserProvider({children}){
        }
      }
      restoreUser();
-    },[])
+    },[]);
+
+    const clearUser = () => {
+        setUser(null);
+    }
     
     return(
-        <UserContext.Provider value={{user,setUser}}>
+        <UserContext.Provider value={{user,setUser,clearUser}}>
             {children}
         </UserContext.Provider>
     )

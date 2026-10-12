@@ -67,7 +67,9 @@ export function CheckoutPage() {
       await createOrder(salePayload);
       setSuccessMessage(true);
       clearCart();
-
+      setTimeout(()=>{
+         navigate("/orders");
+      },2000)
      
 
     } catch (err) {

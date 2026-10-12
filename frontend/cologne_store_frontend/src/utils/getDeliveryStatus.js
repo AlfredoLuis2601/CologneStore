@@ -8,7 +8,7 @@ export function getDeliveryStatus(deliveryDateString) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays > 1) {
-        return { text: `${diffDays} days left!`, status: "Order received" };
+        return { text: `${diffDays} days left`, status: "Order received" };
     } else if (diffDays === 1) {
         return { text: "1 day left", status: "On the way" };
     } else if (diffDays === 0) {
