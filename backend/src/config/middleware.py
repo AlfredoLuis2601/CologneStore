@@ -22,6 +22,8 @@ origins =     [
     "http://localhost:5174",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+   "https://cologne-store-woad.vercel.app",
+   "http://cologne-store-woad.vercel.app"
 ]
 def adding_CORS_middleware(app:FastAPI):
     app.add_middleware(
