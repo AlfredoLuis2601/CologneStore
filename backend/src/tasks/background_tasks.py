@@ -16,7 +16,7 @@ celery_app.config_from_object("backend.src.config.config_env")
 def email_task_queue(subject:str,email:str,body:str):
     try:
       params: resend.Emails.SendParams ={
-          "from": "Cologne Store <onboarding@resend.dev>",
+          "from": "Cologne Store <contato@colognestore.shop>",
           "to": [email],
           "subject": subject,
           "html": body
