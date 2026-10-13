@@ -1,15 +1,15 @@
-import { CologneDetailsPage } from "./pages/CologneDetailsPage.jsx";
-import Home from "./pages/Home.jsx"
-import { LoginPage } from "./pages/LoginPage.jsx"
-import {Navigate, Route,Routes} from "react-router"
+import { CologneDetailsPage } from "./products/pages/CologneDetails.jsx";
+import Home from "./products/pages/Home.jsx"
+import { LoginPage } from "./auth/pages/LoginPage.jsx"
+import { Route,Routes} from "react-router"
 import "./App.css"
-import { SignUpPage } from "./pages/SignUp.jsx"
-import { AuthLayout } from "./components/layout/AuthLayout.jsx";
-import { RequestPasswordResetPage } from "./pages/PasswordResetMailPage.jsx";
-import { VerifyMailPage } from "./pages/VerifyMailPage.jsx";
-import { PasswordReset } from "./pages/PasswordResetPage.jsx";
-import { CheckoutPage } from "./pages/CheckoutPage.jsx";
-import { Orders } from "./pages/Orders.jsx";
+import { SignUpPage } from "./auth/pages/SignUp.jsx"
+import { AuthLayout } from "./auth/components/AuthLayout.jsx";
+import { RequestPasswordResetPage } from "./auth/pages/PasswordResetMail.jsx";
+import { VerifyMailPage } from "./auth/pages/VerifyMail.jsx";
+import { PasswordReset } from "./auth/pages/PasswordReset.jsx";
+import { CheckoutPage } from "./checkout/pages/Checkout.jsx";
+import { Orders } from "./checkout/pages/Orders.jsx";
 
 function App() {
   return(
