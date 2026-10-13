@@ -10,6 +10,7 @@ from backend.src.shared.dependencies import get_auth_service
 from backend.src.auth.service import AuthService
 from pydantic import EmailStr
 import logging
+
 customer_routes = APIRouter()
 user_role_checker = RoleChecker(["User","admin"])
 admin_role_checker = RoleChecker(["admin"])

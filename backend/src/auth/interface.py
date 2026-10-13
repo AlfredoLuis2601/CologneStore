@@ -5,6 +5,7 @@ from backend.src.auth.models import CustomersDB
 from pydantic import EmailStr
 from uuid import UUID
 from datetime import datetime
+
 class UserRepoInterface(GenericRepoInterface[User,UserClient,int]):
     @abstractmethod
     async def add(self,user:UserSignUp)->CustomersDB:
@@ -21,7 +22,6 @@ class UserRepoInterface(GenericRepoInterface[User,UserClient,int]):
     @abstractmethod
     async def activate_user(self,user:CustomersDB)->None:
         pass
-    #Call get_by_token
     @abstractmethod
     async def save_verify_token(self,token:UUID,expiry_time:datetime,user:CustomersDB)->None:
       pass

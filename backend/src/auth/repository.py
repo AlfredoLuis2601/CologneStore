@@ -4,6 +4,7 @@ from backend.src.auth.schemas import User,UserClient,UserUpdate,UserSignUp
 from backend.src.auth.models import CustomersDB
 from pydantic import EmailStr
 from sqlmodel import select
+
 class AuthRepo(GenericSQLModelRepository[User,UserClient,int],UserRepoInterface):
     def __init__(self, session):
         super().__init__(session=session, cls_model=CustomersDB, cls_schema=User)
