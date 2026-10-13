@@ -10,6 +10,7 @@ export function CologneDetails({ cologne, children }) {
               <img className="cologne-details-img" src={cologne.image_url} alt={cologne.name} />
             </div>
             <div className="cologne-details-content">
+              
               <div className="cologne-details-titles">
                 <h1 className="cologne-details-titles-name">{cologne.name}</h1>
                 <p className="cologne-details-titles-brand">{cologne.brand}</p>
@@ -29,6 +30,7 @@ export function CologneDetails({ cologne, children }) {
               <div className="cologne-details-buttons">
                 {children}
               </div>
+              
             </div>
           </div>
         </section>

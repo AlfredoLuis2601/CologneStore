@@ -1,4 +1,3 @@
-
 .cologne-details-container {
   width: 100%;
   max-width: 1500px;
@@ -11,8 +10,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 200px;
-  align-items: center
+  align-items: center;
 }
+
 .cologne-image-wrapper {
   width: 750px;
   height: 700px; 
@@ -27,7 +27,6 @@
   box-sizing: border-box; 
 }
 
-
 .cologne-details-img {
   width: 100%;
   height: 100%;
@@ -40,9 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
- 
 }
-
 
 .cologne-details-titles {
   display: flex;
@@ -66,7 +63,6 @@
   letter-spacing: 1.5px;
   margin: 0;
 }
-
 
 .cologne-details-info {
   display: flex;
@@ -107,7 +103,6 @@
   margin: 0;
 }
 
-
 .cologne-details-buttons {
   display: flex;
   flex-direction: column;
@@ -115,53 +110,57 @@
   margin-top: 15px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1450px) {
+  .cologne-details-container {
+    margin: 2rem auto;
+    padding: 0 15px;
+  }
+
   .cologne-details-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 100px;
+   
   }
 
-  .cologne-details-img {
-    height: 350px;
-  }
-
-  .cologne-details-titles-name {
-    font-size: 2rem;
-  }
-
-  .cologne-details-buttons {
+  .cologne-details-content {
+    flex: 1;
     flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    
+  }
+  .cologne-details-info{
     width: 100%;
+    align-items: center;
+    gap: 40px;
+  }
+  .cologne-details-titles{
+    width: 100%;
+    align-items: center;
+  }
+  .cologne-details-buttons{
+    width: 100%;
+    align-items: center;
+  }
+  .cart-buttons-container{
+    width: 100%;
+    align-self: center;
+  }
+  .cologne-image-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 768px) {
-  .cologne-details-box {
-    margin: 15px;
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .cologne-details-card {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .cologne-details-img {
-    height: 300px;
+  .cologne-details-content {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .cologne-details-titles-name {
-    font-size: 1.8rem;
-  }
-
-  .cologne-details-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .cologne-details-buttons button,
-  .cologne-details-buttons a {
-    width: 100%;
+    font-size: 2rem;
   }
 }

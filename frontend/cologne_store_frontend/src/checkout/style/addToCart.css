@@ -108,3 +108,12 @@
   color: #047857;
 }
 
+@media (max-width: 1450px){
+  .cart-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  align-items: center; 
+  width: 100%;
+}
+}
